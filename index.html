@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Legends | EA FC Mobile Community</title>
+    <!-- Browser Tab Icon -->
+    <link rel="icon" type="image/png" href="logo1.png">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="logo1.png">
+    <!-- For older browsers -->
+    <link rel="shortcut icon" href="logo1.png">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo">
+            <img src="logo1.png" alt="Mystic Legends" class="nav-logo"> 
+            MYSTIC <span>LEGENDS</span>
+        </div>
+        
+        <!-- RIGHT SIDE CONTROLS -->
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div class="ann-icon-container" onclick="showAnn()">
+                <div id="annBadge" class="ann-badge"></div>
+                <div class="ann-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+            </div>
+
+            <!-- Menu Dropdown -->
+            <div class="dropdown">
+                <button class="dropbtn">MENU <i class="fa-solid fa-bars"></i></button>
+                <div class="dropdown-content">
+                    <a href="tournaments.html" target="_blank">Tournament Info</a>
+                    <a href="rankings.html" target="_blank">Player Rankings</a>
+                    <a href="about.html" target="_blank">About Us</a>
+                    <a href="rules.html" target="_blank">Rules & Regulations</a>
+                    <a href="contact.html" target="_blank">Contact Us</a>
+                    <a href="login.html">Admin Login</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Announcement Popup Modal -->
+    <div id="annOverlay" class="ann-overlay">
+        <div class="ann-modal">
+            <div style="background:#ff00ff; padding:15px; color:white; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+                <span><i class="fa-solid fa-bullhorn"></i> BROADCAST CENTER</span>
+                <i class="fa-solid fa-xmark" onclick="closeAnn()" style="cursor:pointer; font-size:1.5rem;"></i>
+            </div>
+            <div id="annList" class="ann-list"></div>
+            <div style="padding:15px; border-top:1px solid #222;">
+                <button onclick="closeAnn()" style="width:100%; background:#ff00ff; color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">CLOSE BROADCAST</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <style>
+                .nexus-section { padding: 80px 20px; max-width: 1000px; margin: 0 auto; position: relative; overflow: hidden; }
+                .text-block { margin-bottom: 50px; line-height: 1.8; }
+                .mission-title { font-size: clamp(1.8rem, 6vw, 2.5rem); margin-bottom: 30px; line-height: 1.2; }
+                .sub-title { color: var(--accent-yellow); text-transform: uppercase; margin-bottom: 20px; display: block; letter-spacing: 2px; }
+                @media (max-width: 768px) { .nexus-section { padding: 50px 15px; } .text-block { margin-bottom: 40px; } }
+            </style>
+
+            <section class="nexus-section">
+                <div class="text-block" style="text-align: center;">
+                    <h2 class="mission-title" style="color: white; text-transform: uppercase;">
+                        The Ultimate Stage for <br>
+                        <span style="color:var(--accent-yellow)">EA FC Mobile Excellence</span>
+                    </h2>
+                </div>
+
+                <div class="text-block" style="border-left: 4px solid var(--accent-blue); padding-left: 20px; background: rgba(0,65,255,0.03); padding-top: 20px; padding-bottom: 20px; border-radius: 0 15px 15px 0;">
+                    <span class="sub-title">Elevate Your Game</span>
+                    <p style="color:#bbb; font-size: 1.1rem; margin: 0;">
+                        Mystic Legends isn’t just a community; it’s the premier destination for <strong>EA FC Mobile enthusiasts</strong> who live for the thrill of the pitch. Our platform provides the infrastructure you need to test your skills against the very best.
+                    </p>
+                </div>
+
+                <div class="text-block">
+                    <h3 style="color:white; text-transform: uppercase; text-align: center; margin-bottom: 35px; letter-spacing: 3px;">
+                        Why Join the <span style="color:var(--accent-yellow)">Mystic Elite?</span>
+                    </h3>
+                    <div class="home-tour-grid" style="gap: 25px;">
+                        <div class="home-tour-card" style="margin-bottom: 10px;">
+                            <h4 style="color:var(--accent-yellow); margin-bottom: 12px;"><i class="fa-solid fa-trophy"></i> Structured Tournaments</h4>
+                            <p style="color:#888; font-size: 0.95rem;">Experience organized leagues and seasonal championships designed for pro-level mobile play.</p>
+                        </div>
+                        <div class="home-tour-card" style="margin-bottom: 10px;">
+                            <h4 style="color:var(--accent-yellow); margin-bottom: 12px;"><i class="fa-solid fa-chart-line"></i> Global Rankings</h4>
+                            <p style="color:#888; font-size: 0.95rem;">Climb our custom leaderboard and prove you are the number one player in the community.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-block" style="text-align: center; padding-top: 20px;">
+                    <h3 style="color:var(--accent-yellow); text-transform: uppercase; margin-bottom: 20px; font-size: 1.8rem;">Ready to Make Your Mark?</h3>
+                    <p style="color:#888; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Don't watch from the sidelines—become part of the most dedicated EA FC Mobile community.
+                    </p>
+                    <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                        <a href="https://chat.whatsapp.com/Idtmr2beKY48zXvjVo6fNl" target="_blank" class="join-action-btn" style="width: auto; padding: 15px 30px; margin: 0;">JOIN THE COMMUNITY</a>
+                        <a href="tournaments.html" class="view-all-btn" style="padding: 15px 30px;">VIEW ACTIVE TOURNAMENTS</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECENT TOURNAMENTS -->
+            <section class="recent-events">
+                <h2 style="text-align:center; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px;">
+                    ARENA <span style="color:var(--accent-yellow)">HIGHLIGHTS</span>
+                </h2>
+                <div id="recent-tours-container" class="home-tour-grid">
+                    <p style="text-align:center; color:#888;">Loading Arena Data...</p>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="tournaments.html" class="view-all-btn">SEE FULL TOURNAMENT LIST <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </section>
+
+            <!-- TOP RANKINGS -->
+            <section class="home-rankings">
+                <h2 style="text-align:center; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px;">
+                    TOP <span style="color:var(--accent-yellow)">STRIKERS</span>
+                </h2>
+                <div class="mini-leaderboard">
+                    <div class="rank-header"><span>RANK</span><span>PLAYER</span><span>PTS</span></div>
+                    <div id="home-rankings-container"><p style="text-align:center; padding:20px; color:#555;">Loading Standings...</p></div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="rankings.html" class="view-all-btn">VIEW GLOBAL RANKINGS <i class="fa-solid fa-ranking-star"></i></a>
+                </div>
+            </section>
+
+            <!-- RECENT ARENA RESULTS -->
+            <section class="recent-events" style="background: #050505;">
+                <h2 style="text-align:center; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px;">
+                    RECENT <span style="color:var(--accent-yellow)">ARENA RESULTS</span>
+                </h2>
+                <div id="home-recent-results" class="home-tour-grid">
+                    <p style="text-align:center; color:#555; width:100%;">Syncing Arena Data...</p>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="livescores.html" class="view-all-btn" style="border-color:#ff003c; color:#ff003c;">VIEW ALL MATCHES <i class="fa-solid fa-tower-broadcast"></i></a>
+                </div>
+            </section>
+
+            <!-- NEWSLETTER -->
+            <section class="newsletter-sec">
+                <div class="news-content">
+                    <h2>STAY IN THE <span style="color:var(--accent-yellow)">LOOP</span></h2>
+                    <p>Get tournament alerts and exclusive Mystic news delivered to your inbox.</p>
+                    <form id="newsForm" class="news-form">
+                        <input type="email" id="subEmail" placeholder="Enter your pro email" required>
+                        <button type="submit" id="subBtn">SUBSCRIBE</button>
+                    </form>
+                    <div id="newsMsg" style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;"></div>
+                </div>
+            </section>
+
+            <div class="spacer"></div>
+
+            <!-- Footer -->
+            <footer>
+                <div class="social-icons">
+                    <a href="#" target="_blank"><i class="fa-brands fa-facebook"></i> Facebook</a>
+                    <a href="#" target="_blank"><i class="fa-brands fa-x-twitter"></i> Twitter</a>
+                    <a href="#" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a>
+                    <a href="#" target="_blank"><i class="fa-brands fa-discord"></i> Discord</a>
+                </div>
+                <div class="copyright">
+                    &copy; Mystic Legends 2024-26 | All Rights Reserved For <span class="owner">Anubhav Sarkar</span>
+                </div>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        const API_BASE = 'https://nl-server-k7i9.onrender.com/api';
+
+        async function loadHomeTournaments() {
+            const container = document.getElementById('recent-tours-container');
+            try {
+                const res = await fetch(`${API_BASE}/manage-tournament`);
+                const allTours = await res.json();
+                const recentTours = allTours.filter(t => t.status === 'Live' || t.status === 'Upcoming').slice(0, 2);
+
+                if (recentTours.length === 0) {
+                    container.innerHTML = '<p style="text-align:center; color:#555;">No active tournaments. Stay tuned!</p>';
+                    return;
+                }
+
+                container.innerHTML = recentTours.map(t => `
+                    <div class="home-tour-card">
+                        <div class="home-status-badge ${t.status === 'Live' ? 'bg-live' : 'bg-upcoming'}">${t.status}</div>
+                        <h3 style="margin: 0 0 10px 0; color:white;">${t.title}</h3>
+                        <p style="color:#888; font-size:0.9rem;"><i class="fa-solid fa-calendar"></i> ${t.date || 'TBA'}</p>
+                        <p style="color:var(--accent-yellow); font-weight:bold;"><i class="fa-solid fa-trophy"></i> ${t.prize || 'Trophy'}</p>
+                    </div>
+                `).join('');
+            } catch (err) { container.innerHTML = '<p style="color:red;">Arena connection paused.</p>'; }
+        }
+
+        async function loadHomeRankings() {
+            const container = document.getElementById('home-rankings-container');
+            try {
+                const res = await fetch(`${API_BASE}/rankings`);
+                const players = await res.json();
+                const topFive = players.slice(0, 5);
+
+                container.innerHTML = topFive.map((player, index) => `
+                    <div class="home-player-row">
+                        <div class="rank-pill">${index + 1}</div>
+                        <div class="p-name">${player.name}</div>
+                        <div class="p-pts">${player.points} <span style="font-size:0.6rem; color:#555;">PTS</span></div>
+                    </div>
+                `).join('');
+            } catch (err) { container.innerHTML = '<p style="color:red;">Connection error.</p>'; }
+        }
+
+        let allMessages = [];
+        async function checkAnnouncements() {
+            try {
+                const res = await fetch(`${API_BASE}/announcement`);
+                allMessages = await res.json();
+                if (allMessages.length > 0) {
+                    if (allMessages[0]._id !== localStorage.getItem('mystic_last_seen_ann')) {
+                        document.getElementById('annBadge').style.display = 'block';
+                    }
+                }
+            } catch(e) { console.error("Sync Error"); }
+        }
+
+        function showAnn() {
+            const overlay = document.getElementById('annOverlay');
+            const list = document.getElementById('annList');
+            overlay.style.display = 'flex';
+            document.body.classList.add('ann-open');
+
+            if (allMessages.length > 0) {
+                localStorage.setItem('mystic_last_seen_ann', allMessages[0]._id);
+                document.getElementById('annBadge').style.display = 'none';
+            }
+
+            list.innerHTML = allMessages.length === 0 ? "<p style='color:#555;'>No news yet.</p>" : 
+                allMessages.map(m => `<div class="ann-item">
+                    <div class="ann-date">${new Date(m.date).toLocaleDateString()}</div>
+                    <div style="white-space: pre-wrap; color:#fff;">${m.message}</div>
+                </div>`).join('');
+        }
+
+        function closeAnn() {
+            document.getElementById('annOverlay').style.display = 'none';
+            document.body.classList.remove('ann-open');
+        }
+
+        async function loadTop5Results() {
+            const container = document.getElementById('home-recent-results');
+            try {
+                const res = await fetch(`${API_BASE}/arena-results`);
+                const matches = await res.json();
+                const finishedMatches = matches.filter(m => m.s1 !== "-" && m.s2 !== "-").slice(0, 5);
+
+                container.innerHTML = finishedMatches.map(m => `
+                    <div class="home-tour-card" style="border-left: 3px solid var(--accent-yellow); padding: 15px; margin-bottom:10px;">
+                        <div style="font-size: 0.65rem; color: #888;">${m.tournamentTitle}</div>
+                        <div style="display: grid; grid-template-columns: 1fr 50px 1fr; align-items: center; text-align: center;">
+                            <div style="text-align: right; font-weight: 700; color: #fff;">${m.p1}</div>
+                            <div style="background: var(--accent-yellow); color: black; font-weight: 900; border-radius: 4px; font-size: 0.8rem;">${m.s1}:${m.s2}</div>
+                            <div style="text-align: left; font-weight: 700; color: #fff;">${m.p2}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) { container.innerHTML = '<p style="color:red;">Sync Error</p>'; }
+        }
+
+        document.getElementById('newsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('subEmail').value;
+            try {
+                const res = await fetch(`${API_BASE}/subscribe`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ email })
+                });
+                if(res.ok) document.getElementById('newsMsg').innerText = "✓ Welcome to Mystic Legends!";
+            } catch(err) { document.getElementById('newsMsg').innerText = "Offline. Try again later."; }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            loadHomeTournaments();
+            loadHomeRankings();
+            checkAnnouncements();
+            loadTop5Results();
+        });
+    </script>
+</body>
+</html>
