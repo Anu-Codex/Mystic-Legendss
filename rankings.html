@@ -40,10 +40,22 @@
             transform: scale(1.01);
         }
 
-        .player-row td { padding: 20px 15px; font-weight: 700; font-size: 1.2rem; }
+        .player-row td { padding: 15px 15px; font-weight: 700; font-size: 1.1rem; vertical-align: middle; }
         
         .rank-num { font-style: italic; color: #888; }
         .pts-cell { color: #E4FF00; font-size: 1.4rem; }
+
+        /* NEW: Profile Picture Styling */
+        .p-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-yellow);
+            vertical-align: middle;
+            margin-right: 12px;
+            background: #111;
+        }
 
         .status-msg { text-align: center; padding: 20px; font-weight: bold; }
         .error-msg { color: #ff4444; }
@@ -56,42 +68,42 @@
 <body>
 
     <div class="ranking-container">
-        <h1 style="text-align:center;">TOP <span style="color:var(--accent-yellow)">STRIKERS</span></h1>
-        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fa-solid fa-house"></i> HOME</a>
+        <h1 style="text-align:center;">MYSTIC <span style="color:var(--accent-yellow)">RANKINGS</span></h1>
+        <p style="text-align: center; color: #888; margin-top: -10px; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem;">EA FC Mobile Elite Community</p>
         
-        <div style="text-align: right; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; margin-top: 30px;">
+            <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fa-solid fa-house"></i> HOME</a>
             <button onclick="exportToPDF()" style="background:var(--accent-yellow); color:black; padding:10px 20px; font-weight:bold; border:none; cursor:pointer; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);">
                 <i class="fa-solid fa-file-pdf"></i> EXPORT RANKINGS PDF
             </button>
         </div>
 
         <table class="leaderboard-table">
-    <thead>
-        <tr>
-            <th>Rank</th>
-            <th>Player Name</th>
-            <th style="text-align:center;">GS</th> <!-- Goals Scored -->
-            <th style="text-align:center;">GA</th> <!-- Goals Attested -->
-            <th>Performance</th>
-            <th style="text-align:right;">Pts</th>
-        </tr>
-    </thead>
-    <tbody id="ranking-body">
-        <tr>
-            <td colspan="6" class="status-msg">Synchronizing with Arena Servers...</td>
-        </tr>
-    </tbody>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Player</th>
+                    <th style="text-align:center;">GS</th> <!-- Goals Scored -->
+                    <th style="text-align:center;">GA</th> <!-- Goals Against -->
+                    <th>Performance</th>
+                    <th style="text-align:right;">Pts</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-body">
+                <tr>
+                    <td colspan="6" class="status-msg">Synchronizing with Mystic Servers...</td>
+                </tr>
+            </tbody>
         </table>
     </div>
 
-<!-- KEEP ALL YOUR STYLES AND HTML BODY - REPLACE THE SCRIPT SECTION ONLY -->
 <script>
-// --- PDF EXPORT (UNTOUCHED) ---
+// --- PDF EXPORT (STAYED THE SAME) ---
 function exportToPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text("NEXUS LEGENDS - EFOOTBALL RANKINGS", 14, 20);
+    doc.text("MYSTIC LEGENDS - EA FC MOBILE RANKINGS", 14, 20);
     doc.setFontSize(11);
     doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
     const table = document.querySelector(".leaderboard-table");
@@ -99,13 +111,14 @@ function exportToPDF() {
         html: table, startY: 40, theme: 'grid',
         headStyles: { fillColor: [0, 65, 255] }, styles: { font: 'helvetica', fontSize: 10 }
     });
-    doc.save("Nexus_Legends_Rankings.pdf");
+    doc.save("Mystic_Legends_Rankings.pdf");
 }
 
-// --- NEW STABLE CONNECTION LOGIC ---
+// --- API CONFIGURATION ---
 const API = "https://ml-server-uw6r.onrender.com/api";
+// Base URL for images (removes /api from the end)
+const SERVER_BASE = "https://nl-server-k7i9.onrender.com";
 
-// --- UPDATED MAPPING LOGIC ---
 async function loadRankings() {
     const tbody = document.getElementById('ranking-body');
     try {
@@ -114,13 +127,20 @@ async function loadRankings() {
         const players = await response.json();
 
         if (players.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="status-msg">No strikers registered.</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" class="status-msg">No strikers registered in the arena yet.</td></tr>';
             return;
         }
 
         tbody.innerHTML = players.map((player, index) => {
             const currentRank = index + 1;
             const oldRank = player.previousRank || 0;
+            
+            // Handle Profile Picture
+            const picUrl = player.profilePic 
+                ? `${SERVER_BASE}${player.profilePic}` 
+                : 'https://cdn-icons-png.flaticon.com/512/149/149071.png'; // Default Avatar
+
+            // Handle Rank Trends
             let trendIcon = '';
             if (oldRank !== 0) {
                 if (oldRank > currentRank) trendIcon = '<i class="fa-solid fa-caret-up" style="color:#00ff88; margin-left:8px;"></i>';
@@ -130,7 +150,10 @@ async function loadRankings() {
             return `
             <tr class="player-row">
                 <td class="rank-num">#${currentRank}</td>
-                <td style="font-weight:700;">${player.name} ${trendIcon}</td>
+                <td style="display: flex; align-items: center;">
+                    <img src="${picUrl}" class="p-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
+                    <span>${player.name} ${trendIcon}</span>
+                </td>
                 <td style="text-align:center; color:var(--green); font-family:monospace;">${player.goalsFor || 0}</td>
                 <td style="text-align:center; color:var(--red); font-family:monospace;">${player.goalsAgainst || 0}</td>
                 <td style="font-size:0.85rem; color:var(--accent); font-weight:bold;">${player.trophies || '-'}</td>
@@ -138,10 +161,12 @@ async function loadRankings() {
             </tr>`;
         }).join('');
     } catch (error) {
-        tbody.innerHTML = '<tr><td colspan="6" class="status-msg error-msg">Connection error. <button onclick="loadRankings()">Retry</button></td></tr>';
+        console.error(error);
+        tbody.innerHTML = '<tr><td colspan="6" class="status-msg error-msg">Connection to Arena paused. <br> <button class="retry-btn" onclick="loadRankings()">Reconnect</button></td></tr>';
     }
 }
-loadRankings();
+
+window.addEventListener('DOMContentLoaded', loadRankings);
 </script>
 </body>
 </html>
