@@ -47,11 +47,10 @@
             
             <!-- ADD PLAYER (WITH IMAGE SUPPORT) -->
             <div class="card" style="border-left: 4px solid var(--blue);">
-                <h3><i class="fa-solid fa-user-plus"></i> Register Player</h3>
-                <input type="text" id="newPlayerName" placeholder="Player Name">
-                <label style="font-size: 0.7rem; color: #888; margin-left: 5px;">PROFILE PICTURE (OPTIONAL)</label>
-                <input type="file" id="newPlayerImg" accept="image/*">
-                <button onclick="addPlayer()" class="btn-blue" id="addPlayerBtn">Sync to Database</button>
+    <h3><i class="fa-solid fa-user-plus"></i> Register Player</h3>
+    <input type="text" id="newPlayerName" placeholder="Player Name">
+    <input type="text" id="newPlayerImg" placeholder="Paste Image URL (Google/Discord Link)">
+    <button onclick="addPlayer()" class="btn-blue" id="addPlayerBtn">Sync to Database</button>
             </div>
 
             <!-- PLAYER SCORING -->
@@ -171,47 +170,41 @@
         }
 
         // FIXED ADD PLAYER FUNCTION
-        async function addPlayer() {
-            const name = document.getElementById('newPlayerName').value;
-            const fileInput = document.getElementById('newPlayerImg');
-            const btn = document.getElementById('addPlayerBtn');
-
-            if(!name) return notify("Name required", "red");
-
-            btn.innerText = "Uploading...";
-            btn.disabled = true;
-
-            const formData = new FormData();
-            formData.append('name', name);
-            if(fileInput.files[0]) {
-                formData.append('image', fileInput.files[0]);
-            }
-
-            try {
-                const res = await fetch(`${API}/add-player`, { 
-                    method: 'POST', 
-                    body: formData // No headers needed for FormData
-                });
-
-                if(res.ok) { 
-                    notify("Registered!"); 
-                    document.getElementById('newPlayerName').value = ""; 
-                    fileInput.value = "";
-                    loadEverything(); 
-                } else {
-                    notify("Error adding player", "red");
-                }
-            } catch (err) {
-                notify("Server Connection Lost", "red");
-            } finally {
-                btn.innerText = "Sync to Database";
-                btn.disabled = false;
-            }
-        }
+        
 
         // --- RANKING ACTIONS ---
         async function rankAction(endpoint, data) {
             const name = document.getElementById('playerSelect').value;
+         async function addPlayer() {
+    const name = document.getElementById('newPlayerName').value;
+    const profilePic = document.getElementById('newPlayerImg').value;
+    const btn = document.getElementById('addPlayerBtn');
+
+    if(!name) return notify("Name required", "red");
+
+    btn.innerText = "Syncing...";
+    btn.disabled = true;
+
+    try {
+        const res = await fetch(`${API}/add-player`, { 
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ name, profilePic }) 
+        });
+
+        if(res.ok) { 
+            notify("Registered!"); 
+            document.getElementById('newPlayerName').value = ""; 
+            document.getElementById('newPlayerImg').value = "";
+            loadEverything(); 
+        }
+    } catch (err) {
+        notify("Server Connection Lost", "red");
+    } finally {
+        btn.innerText = "Sync to Database";
+        btn.disabled = false;
+    }
+         }
             await fetch(`${API}/${endpoint}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ name, ...data }) });
             notify("Points Updated!");
         }
