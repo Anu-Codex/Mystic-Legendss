@@ -129,18 +129,6 @@
                 <button onclick="broadcast()" class="btn-blue" style="background:#ff00ff;">Push Announcement</button>
             </div>
 
-            <div class="card" style="border-left: 4px solid #00d2ff;">
-                <h3><i class="fa-solid fa-cart-shopping"></i> Store Manager</h3>
-                <input type="text" id="itemName" placeholder="Product">
-                <input type="text" id="itemPrice" placeholder="Price">
-                <input type="text" id="itemImg" placeholder="Image URL">
-                <select id="itemCat">
-                    <option value="Standard">Standard</option><option value="Special">Special</option><option value="Discount">Discount</option>
-                </select>
-                <button onclick="addStoreItem()" class="btn-blue" style="background:#00d2ff; color:black;">Add Item</button>
-                <div id="adminStoreList" style="margin-top:10px;"></div>
-            </div>
-
             <div class="card" style="border-left: 4px solid #ffaa00;">
                 <h3><i class="fa-solid fa-envelope-open-text"></i> Newsletter</h3>
                 <button onclick="loadSubscribers()" class="btn-outline">Refresh Emails</button>
@@ -150,7 +138,7 @@
     </div>
 
     <script>
-        const API = "https://nl-server-k7i9.onrender.com/api";
+        const API = "https://ml-server-uw6r.onrender.com/api";
         let toursData = [];
 
         function notify(msg, color = "#00ff88") {
@@ -323,9 +311,6 @@ async function updateMatchScore(stageId, matchId) {
         }
 
         async function broadcast() { await fetch(`${API}/announcement`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ message: document.getElementById('annMsg').value }) }); notify("Broadcasted!"); }
-async function addStoreItem() { await fetch(`${API}/manage-store`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ action: 'add', data: { name: document.getElementById('itemName').value, price: document.getElementById('itemPrice').value, image: document.getElementById('itemImg').value, category: document.getElementById('itemCat').value } }) }); loadAdminStore(); }
-async function loadAdminStore() { const res = await fetch(`${API}/store`); const items = await res.json(); document.getElementById('adminStoreList').innerHTML = items.map(i => `<div style="padding:5px; border-bottom:1px solid #222;">${i.name} <i class="fa-solid fa-trash" onclick="deleteStoreItem('${i._id}')" style="float:right; color:red; cursor:pointer;"></i></div>`).join(''); }
-        async function deleteStoreItem(id) { await fetch(`${API}/manage-store`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ action: 'delete', id }) }); loadAdminStore(); }
 
 async function loadSubscribers() { const res = await fetch(`${API}/subscribers`); const data = await res.json(); document.getElementById('subList').innerHTML = data.map(s => `<div style="padding:5px; border-bottom:1px solid #222;">${s.email}</div>`).join(''); }
 
