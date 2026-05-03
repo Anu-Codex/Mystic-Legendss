@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>Global Rankings | Nexus Legends</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        body { background: #050505; color: white; padding-top: 100px; font-family: 'Rajdhani', sans-serif; }
+        .ranking-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            padding: 10px;
+        }
+
+        .leaderboard-table th {
+            text-transform: uppercase;
+            color: var(--accent-yellow);
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #222;
+        }
+
+        .player-row {
+            background: rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+
+        .player-row:hover {
+            background: rgba(0, 65, 255, 0.1);
+            transform: scale(1.01);
+        }
+
+        .player-row td { padding: 20px 15px; font-weight: 700; font-size: 1.2rem; }
+        
+        .rank-num { font-style: italic; color: #888; }
+        .pts-cell { color: #E4FF00; font-size: 1.4rem; }
+
+        .status-msg { text-align: center; padding: 20px; font-weight: bold; }
+        .error-msg { color: #ff4444; }
+        .retry-btn { 
+            background: #444; color: white; border: none; padding: 5px 15px; 
+            cursor: pointer; border-radius: 4px; margin-top: 10px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ranking-container">
+        <h1 style="text-align:center;">TOP <span style="color:var(--accent-yellow)">STRIKERS</span></h1>
+        <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fa-solid fa-house"></i> HOME</a>
+        
+        <div style="text-align: right; margin-bottom: 20px;">
+            <button onclick="exportToPDF()" style="background:var(--accent-yellow); color:black; padding:10px 20px; font-weight:bold; border:none; cursor:pointer; clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 100%);">
+                <i class="fa-solid fa-file-pdf"></i> EXPORT RANKINGS PDF
+            </button>
+        </div>
+
+        <table class="leaderboard-table">
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Player Name</th>
+            <th style="text-align:center;">GS</th> <!-- Goals Scored -->
+            <th style="text-align:center;">GA</th> <!-- Goals Attested -->
+            <th>Performance</th>
+            <th style="text-align:right;">Pts</th>
+        </tr>
+    </thead>
+    <tbody id="ranking-body">
+        <tr>
+            <td colspan="6" class="status-msg">Synchronizing with Arena Servers...</td>
+        </tr>
+    </tbody>
+        </table>
+    </div>
+
+<!-- KEEP ALL YOUR STYLES AND HTML BODY - REPLACE THE SCRIPT SECTION ONLY -->
+<script>
+// --- PDF EXPORT (UNTOUCHED) ---
+function exportToPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text("NEXUS LEGENDS - EFOOTBALL RANKINGS", 14, 20);
+    doc.setFontSize(11);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+    const table = document.querySelector(".leaderboard-table");
+    doc.autoTable({
+        html: table, startY: 40, theme: 'grid',
+        headStyles: { fillColor: [0, 65, 255] }, styles: { font: 'helvetica', fontSize: 10 }
+    });
+    doc.save("Nexus_Legends_Rankings.pdf");
+}
+
+// --- NEW STABLE CONNECTION LOGIC ---
+const API = "https://nl-server-k7i9.onrender.com/api";
+
+// --- UPDATED MAPPING LOGIC ---
+async function loadRankings() {
+    const tbody = document.getElementById('ranking-body');
+    try {
+        const response = await fetch(`${API}/rankings`);
+        if (!response.ok) throw new Error("Offline");
+        const players = await response.json();
+
+        if (players.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="6" class="status-msg">No strikers registered.</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = players.map((player, index) => {
+            const currentRank = index + 1;
+            const oldRank = player.previousRank || 0;
+            let trendIcon = '';
+            if (oldRank !== 0) {
+                if (oldRank > currentRank) trendIcon = '<i class="fa-solid fa-caret-up" style="color:#00ff88; margin-left:8px;"></i>';
+                else if (oldRank < currentRank) trendIcon = '<i class="fa-solid fa-caret-down" style="color:#ff4444; margin-left:8px;"></i>';
+            }
+
+            return `
+            <tr class="player-row">
+                <td class="rank-num">#${currentRank}</td>
+                <td style="font-weight:700;">${player.name} ${trendIcon}</td>
+                <td style="text-align:center; color:var(--green); font-family:monospace;">${player.goalsFor || 0}</td>
+                <td style="text-align:center; color:var(--red); font-family:monospace;">${player.goalsAgainst || 0}</td>
+                <td style="font-size:0.85rem; color:var(--accent); font-weight:bold;">${player.trophies || '-'}</td>
+                <td class="pts-cell" style="text-align:right;">${player.points || 0}</td>
+            </tr>`;
+        }).join('');
+    } catch (error) {
+        tbody.innerHTML = '<tr><td colspan="6" class="status-msg error-msg">Connection error. <button onclick="loadRankings()">Retry</button></td></tr>';
+    }
+}
+loadRankings();
+</script>
+</body>
+</html>
