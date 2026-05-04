@@ -65,6 +65,8 @@
                 <input type="text" id="tTitle" placeholder="Tournament Title">
                 <input type="text" id="tTeams" placeholder="Teams Count">
                 <select id="tStatus"><option value="Upcoming">Upcoming</option><option value="Live">Live</option><option value="Ended">Ended</option></select>
+                <input type="text" id="tWinner" placeholder="Tournament Winner Name" style="display:none; border: 1px solid gold;">
+                <input type="text" id="tPrize" placeholder="Prize Pool (e.g. ₹500 / 1000 FP)">
                 <input type="text" id="tJoin" placeholder="WhatsApp Link">
                 <input type="date" id="tDate">
                 <button onclick="submitTour()" class="btn-yellow">Deploy</button>
@@ -211,7 +213,10 @@
 
         async function submitTour() {
             const id = document.getElementById('editId').value;
-            const data = { title: document.getElementById('tTitle').value, totalTeams: document.getElementById('tTeams').value, status: document.getElementById('tStatus').value, joinLink: document.getElementById('tJoin').value, date: document.getElementById('tDate').value };
+            const data = { title: document.getElementById('tTitle').value, totalTeams: document.getElementById('tTeams').value, status: document.getElementById('tStatus').value, 
+                 winner: document.getElementById('tWinner').value, 
+                prize: document.getElementById('tPrize').value,          
+                joinLink: document.getElementById('tJoin').value, date: document.getElementById('tDate').value };
             const endpoint = id ? 'update-tournament' : 'manage-tournament';
             await fetch(`${API}/${endpoint}`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(id ? {id, data} : data) });
             notify("Tournament Updated!"); loadEverything();
