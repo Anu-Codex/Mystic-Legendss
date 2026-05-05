@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Details | Mystic Legends</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #050505; color: white; font-family: 'Rajdhani', sans-serif; padding: 20px; }
+        .detail-card { max-width: 600px; margin: 50px auto; background: rgba(255,255,255,0.03); border: 1px solid #222; border-radius: 20px; padding: 30px; border-top: 4px solid var(--accent-yellow); }
+        .prize-tag { background: var(--accent-yellow); color: black; padding: 5px 15px; border-radius: 5px; font-weight: bold; display: inline-block; margin: 10px 0; }
+        .btn-join { display: block; width: 100%; text-align: center; background: #25D366; color: white; padding: 15px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div id="loader" style="text-align: center; margin-top: 100px;">
+        <h2 style="color:var(--accent-yellow);">FETCHING ARENA DATA...</h2>
+    </div>
+
+    <div id="tourContent" class="detail-card" style="display: none;">
+        <a href="index.html" style="color:#888; text-decoration: none;"><i class="fa-solid fa-arrow-left"></i> Back to Home</a>
+        <h1 id="tTitle" style="font-size: 2.5rem; margin-bottom: 10px;"></h1>
+        <div id="tStatus" style="text-transform: uppercase; letter-spacing: 2px; font-weight: bold;"></div>
+        
+        <div class="prize-tag">PRIZE: <span id="tPrize"></span></div>
+        
+        <p style="color: #bbb; line-height: 1.6; font-size: 1.1rem; margin-top: 20px;">
+            <i class="fa-solid fa-users"></i> Capacity: <span id="tTeams"></span> Teams<br>
+            <i class="fa-solid fa-calendar"></i> Kick-off: <span id="tDate"></span>
+        </p>
+
+        <a href="#" id="tLink" class="btn-join"><i class="fa-brands fa-whatsapp"></i> JOIN TOURNAMENT WHATSAPP</a>
+    </div>
+
+    <script>
+        const API = "https://ml-server-uw6r.onrender.com/api";
+        
+        async function loadTour() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tourId = urlParams.get('id');
+
+            if (!tourId) {
+                document.getElementById('loader').innerHTML = "<h1>Tournament Not Found</h1>";
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/manage-tournament`);
+                const allTours = await res.json();
+                const tour = allTours.find(t => t._id === tourId);
+
+                if (tour) {
+                    document.getElementById('tTitle').innerText = tour.title;
+                    document.getElementById('tStatus').innerText = tour.status;
+                    document.getElementById('tStatus').style.color = tour.status === 'Live' ? '#00ff88' : '#f8d448';
+                    document.getElementById('tPrize').innerText = tour.prize || "Trophy";
+                    document.getElementById('tTeams').innerText = tour.totalTeams;
+                    document.getElementById('tDate').innerText = tour.date;
+                    document.getElementById('tLink').href = tour.joinLink;
+                    
+                    document.getElementById('loader').style.display = "none";
+                    document.getElementById('tourContent').style.display = "block";
+                }
+            } catch (err) {
+                document.getElementById('loader').innerText = "Connection Error";
+            }
+        }
+        loadTour();
+    </script>
+</body>
+</html>
