@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>Legal Center | Mystic Legends</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --accent-yellow: #E4FF00;
+            --nexus-blue: #0041FF;
+            --dark-bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: #222;
+        }
+
+        body {
+            background: var(--dark-bg);
+            color: white;
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding-top: 100px;
+        }
+
+        .legal-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 40px;
+            padding: 20px;
+        }
+
+        /* --- Sidebar Navigation --- */
+        .legal-nav {
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+        }
+
+        .nav-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 15px;
+            color: #888;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            border-left: 3px solid transparent;
+            margin-bottom: 5px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            color: var(--accent-yellow);
+            background: rgba(228, 255, 0, 0.05);
+            border-left: 3px solid var(--accent-yellow);
+        }
+
+        /* --- Content Sections --- */
+        .legal-content {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+        .content-section {
+            display: none; 
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h1 { font-size: 3rem; color: var(--accent-yellow); margin-top: 0; }
+        h2 { color: var(--nexus-blue); border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 40px; }
+        
+        .rule-box {
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border-left: 4px solid #333;
+        }
+
+        .rule-box strong { color: var(--accent-yellow); display: block; margin-bottom: 5px; }
+        
+        .important-note {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid #ff4444;
+            padding: 20px;
+            border-radius: 10px;
+            color: #ff8888;
+            margin: 20px 0;
+        }
+
+        p { line-height: 1.8; color: #bbb; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; color: #bbb; }
+
+    </style>
+</head>
+<body>
+
+    <div class="legal-container">
+        <!-- Sidebar -->
+        <aside class="legal-nav">
+            <div class="nav-card">
+                <a href="#rules" class="nav-item active" onclick="showSection('rules', this)">Rules & Regs</a>
+                <a href="#terms" class="nav-item" onclick="showSection('terms', this)">Terms of Service</a>
+                <a href="#privacy" class="nav-item" onclick="showSection('privacy', this)">Privacy Policy</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="legal-content">
+            <header>
+                <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fa-solid fa-house"></i> HOME</a>
+            </header>
+            
+            <!-- SECTION 1: RULES -->
+            <section id="rules" class="content-section active">
+                <h1>RULES & <span style="color:white">REGULATIONS</span></h1>
+                <p>To ensure a fair and elite EA FC Mobile arena for all competitors, the following rules are strictly enforced within Mystic Legends.</p>
+
+                <div class="important-note">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <strong>FAIR PLAY POLICY:</strong> Network manipulation (Lag-switching), VPN usage for advantage, or excessive toxicity will result in an immediate and permanent arena ban.
+                </div>
+
+                <h2>1. MATCHPLAY PROTOCOLS</h2>
+                <div class="rule-box">
+                    <strong>Technical Disconnections:</strong> In the event of a disconnection before half-time (45'), the match must be replayed from 0-0. If a disconnect occurs after 70', the score at the time of exit stands as final.
+                </div>
+                <div class="rule-box">
+                    <strong>Fair Play Mechanics:</strong> While skill moves are part of the game, deliberate exploitation of "Kick-off Glitches" or "Constant Cross-Spamming" (repeatedly using only crosses to score) may lead to a point deduction upon review of evidence.
+                </div>
+                <div class="rule-box">
+                    <strong>Squad Requirements:</strong> Players must adhere to OVR caps or specific player type restrictions if specified in the tournament roster description.
+                </div>
+
+                <h2>2. REPORTING & EVIDENCE</h2>
+                <ul>
+                    <li>Both Managers must take a screenshot of the "Match Summary" showing the goals and full stats.</li>
+                    <li>Results must be uploaded to the Mystic Results Portal or WhatsApp channel within 15 minutes.</li>
+                    <li>If a match is disputed, video evidence of the foul play or lag must be provided to the Admins.</li>
+                </ul>
+            </section>
+
+            <!-- SECTION 2: TERMS -->
+            <section id="terms" class="content-section">
+                <h1>TERMS & <span style="color:white">CONDITIONS</span></h1>
+                <p>By registering for Mystic Legends tournaments, you accept the following governing terms.</p>
+
+                <h2>1. ACCOUNT ELIGIBILITY</h2>
+                <p>Only one account per Manager is permitted. Using a "Smurf" account or playing on behalf of another user is strictly prohibited and leads to immediate disqualification from the season.</p>
+
+                <h2>2. PRIZE POOLS & PAYOUTS</h2>
+                <p>Prize distributions are processed via the stated payment method (UPI, PayPal, or In-game Points) within 72 hours of the Tournament Final. Ensure your payout details are correct; Mystic Legends is not responsible for funds sent to incorrectly provided IDs.</p>
+
+                <h2>3. COMPETITIVE INTEGRITY</h2>
+                <p>Mystic Legends reserves the right to review any match. If a match is deemed "fixed" or if players are found to be colluding to manipulate the leaderboard, both players will be expelled.</p>
+            </section>
+
+            <!-- SECTION 3: PRIVACY -->
+            <section id="privacy" class="content-section">
+                <h1>PRIVACY <span style="color:white">POLICY</span></h1>
+                <p>Your privacy is respected within our mobile gaming community.</p>
+
+                <h2>1. WHAT WE COLLECT</h2>
+                <p>We collect only necessary competitive data:
+                    <ul>
+                        <li>EA FC In-game Name (IGN) and User ID (UID).</li>
+                        <li>WhatsApp Contact (for match pairing and alerts).</li>
+                        <li>Historical performance data for our Global Rankings.</li>
+                    </ul>
+                </p>
+
+                <h2>2. DATA SECURITY</h2>
+                <p>Your contact details are encrypted and only accessible to Senior Admins for payout and coordination purposes. We never share your personal information with external advertisers.</p>
+
+                <h2>3. IMAGE USAGE</h2>
+                <p>By participating, you allow Mystic Legends to use your Profile Picture URL and IGN in our Leaderboards and Broadcast Center for community recognition.</p>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function showSection(id, element) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            // Show selected section
+            document.getElementById(id).classList.add('active');
+
+            // Update Nav styling
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            element.classList.add('active');
+
+            // Scroll to top of content
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
