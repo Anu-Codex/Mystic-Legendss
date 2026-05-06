@@ -499,10 +499,19 @@ body.ann-open {
     overflow: hidden;
 }
 .ann-modal {
-    background: #0a0a0a; border: 1px solid #ff00ff;
-    width: 95%; max-width: 450px; max-height: 80vh; /* Limit height */
-    padding: 0; border-radius: 20px; overflow: hidden;
-    display: flex; flex-direction: column;
+    background: #0a0a0a;
+    border: 1px solid var(--accent-blue);
+    width: 90%;
+    max-width: 450px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 30px rgba(0, 65, 255, 0.3);
+}
+.thunder-flash, #esportsDust, .lightning-bolt-visual, body::after {
+    pointer-events: none !important;
 }
 .ann-list {
     padding: 20px; overflow-y: auto; text-align: left;
