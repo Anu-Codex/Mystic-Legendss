@@ -12,6 +12,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <canvas id="esportsDust" style="position:fixed; top:0; left:0; pointer-events:none; z-index:1;"></canvas>
 
     <!-- Header -->
     <header>
@@ -264,7 +265,6 @@
             loadTop5Results();
             checkAnnouncements();
         });
-        <canvas id="esportsDust" style="position:fixed; top:0; left:0; pointer-events:none; z-index:1;"></canvas>
 
 
 const canvas = document.getElementById('esportsDust');
