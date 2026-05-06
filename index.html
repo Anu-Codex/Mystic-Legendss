@@ -12,6 +12,9 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Lightning Thunder Layers -->
+<div class="thunder-flash"></div>
+<div id="lightning-bolt"></div>
     <canvas id="esportsDust" style="position:fixed; top:0; left:0; pointer-events:none; z-index:1;"></canvas>
 <style>
     /* Add this to your body, .tour-card, and #esportsDust */
@@ -322,6 +325,40 @@ function animate() {
 }
 init();
 animate();
+        function triggerLightning() {
+    const bolt = document.getElementById('lightning-bolt');
+    const container = document.body;
+
+    // Create a random interval for the next strike (between 4 to 10 seconds)
+    const nextStrike = Math.random() * 6000 + 4000;
+
+    setTimeout(() => {
+        // Create a temporary lightning bolt element
+        const lightning = document.createElement('div');
+        lightning.className = 'lightning-bolt-visual';
+        
+        // Random Position
+        const randomX = Math.random() * 80; // 0 to 80% of width
+        lightning.style.left = randomX + '%';
+        lightning.style.top = '0';
+        
+        // Random Width
+        const randomWidth = Math.random() * 3 + 1;
+        lightning.style.width = randomWidth + 'px';
+
+        document.body.appendChild(lightning);
+
+        // Remove the bolt after the animation finishes (400ms)
+        setTimeout(() => {
+            lightning.remove();
+        }, 400);
+
+        // Loop the function
+        triggerLightning();
+    }, nextStrike);
+}
+
+triggerLightning();
     </script>
 </body>
 </html>
