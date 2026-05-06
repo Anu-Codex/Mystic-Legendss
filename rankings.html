@@ -1,121 +1,134 @@
-<!-- rankings.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
     <title>Global Rankings | Mystic Legends</title>
-    <link rel="stylesheet" href="stylef.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-    :root {
-        --accent-yellow: #f8d448;
-        --neon-green: #00ff88;
-        --glass-white: rgba(255, 255, 255, 0.03);
-    }
-
-    body { background: #050505; color: white; padding-top: 80px; font-family: 'Rajdhani', sans-serif; }
-    .ranking-container { max-width: 950px; margin: 0 auto; padding: 15px; }
-
-    /* --- THE TABLE --- */
-    .leaderboard-table { 
-        width: 100%; 
-        border-collapse: separate; 
-        border-spacing: 0 8px; 
-        backdrop-filter: blur(15px);
-        table-layout: fixed; /* Keeps columns stable */
-    }
-
-    .leaderboard-table th { 
-        padding: 15px; 
-        color: var(--accent-yellow); 
-        text-transform: uppercase; 
-        font-size: 0.8rem; 
-        text-align: left;
-    }
-
-    /* --- PLAYER ROWS --- */
-    .player-row { background: var(--glass-white); transition: 0.3s; }
     
-    /* Gold, Silver, Bronze Highlights */
-    .player-row:nth-child(1) { 
-        background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%); 
-        border-left: 4px solid #FFD700; 
-    }
-    .player-row:nth-child(2) { 
-        background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, transparent 100%); 
-        border-left: 4px solid #C0C0C0; 
-    }
-    .player-row:nth-child(3) { 
-        background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, transparent 100%); 
-        border-left: 4px solid #CD7F32; 
-    }
+    <!-- PDF LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    .player-row td { padding: 10px 15px; vertical-align: middle; font-weight: 700; }
+    <style>
+        :root {
+            --accent-yellow: #f8d448;
+            --neon-green: #00ff88;
+            --glass-white: rgba(255, 255, 255, 0.03);
+        }
 
-    /* --- THE AVATAR (STRICT FIX) --- */
-    .p-avatar {
-        width: 45px !important;
-        height: 45px !important;
-        min-width: 45px !important;
-        min-height: 45px !important;
-        border-radius: 50%;
-        object-fit: cover; /* Important: prevents squashing */
-        border: 2px solid var(--accent-yellow);
-        margin-right: 12px;
-        background: #111;
-        display: inline-block;
-    }
+        body { background: #050505; color: white; padding-top: 80px; font-family: 'Rajdhani', sans-serif; }
+        .ranking-container { max-width: 950px; margin: 0 auto; padding: 15px; }
 
-    /* Flex container for Name + Photo */
-    .striker-cell {
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
+        /* --- THE TABLE --- */
+        .leaderboard-table { 
+            width: 100%; 
+            border-collapse: separate; 
+            border-spacing: 0 8px; 
+            backdrop-filter: blur(15px);
+        }
 
-    .rank-num { font-style: italic; color: #888; width: 40px; }
-    .pts-cell { color: var(--accent-yellow); font-size: 1.3rem; text-align: right; }
+        .leaderboard-table th { 
+            padding: 15px; 
+            color: var(--accent-yellow); 
+            text-transform: uppercase; 
+            font-size: 0.8rem; 
+            text-align: left;
+            border-bottom: 1px solid #222;
+        }
 
-    /* Header Nav */
-    .nav-header {
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center; 
-        margin-bottom: 20px; 
-        background: #111; 
-        padding: 10px 20px; 
-        border-radius: 10px;
-    }
+        /* --- PLAYER ROWS --- */
+        .player-row { background: var(--glass-white); transition: 0.3s; }
+        
+        /* Gold, Silver, Bronze Highlights */
+        .player-row:nth-child(1) { 
+            background: linear-gradient(90deg, rgba(255, 215, 0, 0.15) 0%, transparent 100%); 
+            border-left: 4px solid #FFD700; 
+        }
+        .player-row:nth-child(2) { 
+            background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, transparent 100%); 
+            border-left: 4px solid #C0C0C0; 
+        }
+        .player-row:nth-child(3) { 
+            background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, transparent 100%); 
+            border-left: 4px solid #CD7F32; 
+        }
 
-    @media (max-width: 768px) {
-        .ranking-container { padding: 5px; }
-        .leaderboard-table th, .player-row td { padding: 8px 10px; font-size: 0.9rem; }
-        .p-avatar { width: 35px !important; height: 35px !important; min-width: 35px; min-height: 35px; }
-    }
+        .player-row td { padding: 10px 15px; vertical-align: middle; font-weight: 700; }
+
+        /* --- THE AVATAR (STRICT RESTRICTION) --- */
+        .p-avatar {
+            width: 45px !important;
+            height: 45px !important;
+            min-width: 45px !important;
+            min-height: 45px !important;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-yellow);
+            margin-right: 12px;
+            background: #111;
+            display: inline-block;
+        }
+
+        .striker-cell {
+            display: flex;
+            align-items: center;
+        }
+
+        .rank-num { font-style: italic; color: #888; width: 40px; }
+        .pts-cell { color: var(--accent-yellow); font-size: 1.3rem; text-align: right; }
+
+        /* Header Nav */
+        .nav-header {
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 20px; 
+            background: #111; 
+            padding: 10px 20px; 
+            border-radius: 10px;
+        }
+
+        .view-all-btn {
+            background: var(--accent-yellow);
+            color: black;
+            padding: 8px 15px;
+            font-weight: 800;
+            text-decoration: none;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        @media (max-width: 768px) {
+            .leaderboard-table th, .player-row td { padding: 8px 10px; font-size: 0.9rem; }
+            .p-avatar { width: 35px !important; height: 35px !important; min-width: 35px; min-height: 35px; }
+        }
     </style>
 </head>
 <body>
 
     <div class="ranking-container">
-        <div style="text-align: center; margin-bottom: 40px;" data-aos="fade-down">
-            <h1 style="margin:0;">MYSTIC <span style="color:var(--accent-yellow)">RANKINGS</span></h1>
-            <div style="color:#555; letter-spacing:4px; font-size:0.8rem;">THE GLOBAL ELITE</div>
+        <div style="text-align: center; margin-bottom: 30px;" data-aos="fade-down">
+            <h1 style="margin:0; letter-spacing: 2px;">MYSTIC <span style="color:var(--accent-yellow)">RANKINGS</span></h1>
+            <div style="color:#555; letter-spacing:4px; font-size:0.8rem; text-transform: uppercase;">The Global Elite</div>
         </div>
         
-        <div class="nav-header" data-aos="fade-in">
+        <div class="nav-header">
             <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fa-solid fa-house"></i> HOME</a>
-            <button onclick="exportToPDF()" class="view-all-btn" style="padding: 8px 20px; font-size: 0.7rem;">EXPORT PDF</button>
+            <button onclick="exportToPDF()" class="view-all-btn">EXPORT PDF</button>
         </div>
 
         <table class="leaderboard-table" data-aos="fade-up">
             <thead>
                 <tr>
-                    <th width="80">#</th>
+                    <th width="60">#</th>
                     <th>STRIKER</th>
                     <th style="text-align:center;">GS</th>
                     <th style="text-align:center;">GA</th>
@@ -123,7 +136,7 @@
                 </tr>
             </thead>
             <tbody id="ranking-body">
-                <!-- Data injected here -->
+                <tr><td colspan="5" style="text-align:center; padding:40px;">Syncing with Arena...</td></tr>
             </tbody>
         </table>
     </div>
@@ -132,26 +145,66 @@
     <script>
         AOS.init();
         const API = "https://ml-server-uw6r.onrender.com/api";
+
+        // --- LOAD RANKINGS FUNCTION ---
         async function loadRankings() {
             const tbody = document.getElementById('ranking-body');
             try {
                 const response = await fetch(`${API}/rankings`);
                 const players = await response.json();
-                tbody.innerHTML = players.map((player, index) => `
+                
+                if (players.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">No strikers found.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = players.map((player, index) => {
+                    const pic = player.profilePic || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+                    return `
                     <tr class="player-row">
                         <td class="rank-num">${index + 1}</td>
-                        <td style="display: flex; align-items: center;">
-                            <img src="${player.profilePic || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="p-avatar">
+                        <td class="striker-cell">
+                            <img src="${pic}" class="p-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
                             <span>${player.name} ${index === 0 ? '👑' : ''}</span>
                         </td>
                         <td style="text-align:center; color:var(--neon-green);">${player.goalsFor || 0}</td>
                         <td style="text-align:center; color:#ff4444;">${player.goalsAgainst || 0}</td>
-                        <td class="pts-cell" style="text-align:right;">${player.points}</td>
-                    </tr>`).join('');
-            } catch (error) { }
+                        <td class="pts-cell">${player.points}</td>
+                    </tr>`;
+                }).join('');
+            } catch (error) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Connection Error</td></tr>';
+            }
         }
+
+        // --- RESTORED PDF EXPORT FUNCTION ---
+        function exportToPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            doc.setFillColor(10, 10, 10);
+            doc.rect(0, 0, 210, 297, 'F');
+            
+            doc.setTextColor(248, 212, 72); 
+            doc.setFontSize(22);
+            doc.text("MYSTIC LEGENDS RANKINGS", 14, 20);
+            
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 28);
+
+            doc.autoTable({
+                html: '.leaderboard-table',
+                startY: 35,
+                theme: 'grid',
+                headStyles: { fillColor: [248, 212, 72], textColor: [0, 0, 0] },
+                styles: { fillColor: [20, 20, 20], textColor: [255, 255, 255] }
+            });
+
+            doc.save("Mystic_Legends_Rankings.pdf");
+        }
+
         loadRankings();
-        // (Keep your PDF Export function exactly as it was)
     </script>
 </body>
 </html>
