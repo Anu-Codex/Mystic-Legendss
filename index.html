@@ -13,7 +13,15 @@
 </head>
 <body>
     <canvas id="esportsDust" style="position:fixed; top:0; left:0; pointer-events:none; z-index:1;"></canvas>
-
+<style>
+    /* Add this to your body, .tour-card, and #esportsDust */
+body, #esportsDust, .home-tour-card, .tour-card {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0); /* Forces GPU rendering */
+    will-change: transform;
+}
+    </style>
     <!-- Header -->
     <header>
         <div class="logo"><img src="logo1.png" alt="Logo" class="nav-logo"> MYSTIC <span>LEGENDS</span></div>
