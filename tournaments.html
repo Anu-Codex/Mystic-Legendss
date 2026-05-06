@@ -88,6 +88,34 @@
     100% { opacity: 0.28; }
 }
 body::after { animation: flicker 0.15s infinite; }
+        /* The Shine Effect Container */
+.tour-card, .home-tour-card, .player-row {
+    position: relative;
+    overflow: hidden; /* Clips the shine */
+}
+
+/* The Animated Shine Beam */
+.tour-card::before, .home-tour-card::before, .player-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right, 
+        transparent, 
+        rgba(228, 255, 0, 0.2), /* Mystic Yellow Shine */
+        transparent
+    );
+    transform: skewX(-25deg);
+    transition: 0.8s;
+}
+
+/* Trigger Shine on Hover */
+.tour-card:hover::before, .home-tour-card:hover::before, .player-row:hover::before {
+    left: 150%;
+}
     </style>
 </head>
 <body>
