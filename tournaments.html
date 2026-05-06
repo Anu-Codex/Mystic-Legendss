@@ -116,30 +116,7 @@ body::after { animation: flicker 0.15s infinite; }
 .tour-card:hover::before, .home-tour-card:hover::before, .player-row:hover::before {
     left: 150%;
 }
-        .badge-live {
-    background: #ff003c;
-    color: white;
-    font-weight: 900;
-    position: relative;
-    border: none;
-    z-index: 1;
-    overflow: visible;
-}
-
-.badge-live::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: #ff003c;
-    border-radius: inherit;
-    z-index: -1;
-    animation: liveEnergy 1.5s ease-out infinite;
-}
-
-@keyframes liveEnergy {
-    0% { transform: scale(1); opacity: 1; }
-    100% { transform: scale(2.5); opacity: 0; }
-}
+        
     </style>
 </head>
 <body>
