@@ -126,6 +126,31 @@ body::after {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
+        .mission-title, h1, h2 {
+    position: relative;
+    display: inline-block;
+}
+
+/* Subtle flicker effect on headings */
+.mission-title::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 2px;
+    text-shadow: -1px 0 #ff003c;
+    top: 0;
+    color: white;
+    background: black;
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: noise-anim 2s infinite linear alternate-reverse;
+}
+
+@keyframes noise-anim {
+    0% { clip: rect(10px, 9999px, 20px, 0); }
+    20% { clip: rect(30px, 9999px, 40px, 0); }
+    /* ... add more steps for more "jitter" ... */
+    100% { clip: rect(80px, 9999px, 90px, 0); }
+}
     </style>
 </head>
 <body>
