@@ -504,6 +504,7 @@ footer {
     max-width: 420px; /* PC width limit */
     
     /* HEIGHT FIX: Prevents it from going to the bottom */
+    height: auto !important;
     max-height: 50vh; 
     
     display: flex;
