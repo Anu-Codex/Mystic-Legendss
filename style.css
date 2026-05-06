@@ -670,4 +670,8 @@ footer {
     10% { opacity: 1; transform: scaleX(1.5); }
     100% { opacity: 0; transform: scaleX(0.5); }
 }
+/* Add this to style.css */
+#esportsDust, .thunder-flash, .lightning-bolt-visual, body::after {
+    pointer-events: none !important; /* Allows you to click "through" the animations */
+}
 
