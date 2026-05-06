@@ -26,6 +26,10 @@
 .view-all-btn:hover {
     box-shadow: 0 0 15px var(--nexus-cyan);
 }
+html {
+    background-color: #030303 !important; /* Forces the VERY bottom layer to be black */
+    scrollbar-gutter: stable;
+}
 
 body {
     background: radial-gradient(circle at top, var(--pitch-navy) 0%, var(--bg-color) 100%);
