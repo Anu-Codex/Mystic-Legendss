@@ -1,3 +1,4 @@
+<!-- rankings.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,219 +8,69 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        :root {
-            --accent-yellow: #f8d448;
-            --green: #00ff88;
-            --red: #ff4444;
-        }
-        body { background: #050505; color: white; padding-top: 100px; font-family: 'Rajdhani', sans-serif; }
-        .ranking-container { max-width: 950px; margin: 0 auto; padding: 20px; }
-        
-        .leaderboard-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 10px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 15px;
-            padding: 10px;
-        }
-
-        .leaderboard-table th {
-            text-transform: uppercase;
-            color: var(--accent-yellow);
-            padding: 15px;
-            text-align: left;
-            border-bottom: 2px solid #222;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .player-row {
-            background: rgba(255, 255, 255, 0.05);
-            transition: 0.3s;
-        }
-
-        .player-row:hover {
-            background: rgba(0, 65, 255, 0.1);
-            transform: scale(1.01);
-        }
-
-        .player-row td { padding: 12px 15px; font-weight: 700; font-size: 1.1rem; vertical-align: middle; }
-        
-        .rank-num { font-style: italic; color: #888; font-weight: 500 !important; }
-        .pts-cell { color: #E4FF00; font-size: 1.4rem; font-weight: 900 !important; }
-
-        /* Profile Picture Styling */
-        .p-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--accent-yellow);
-            vertical-align: middle;
-            margin-right: 15px;
-            background: #111;
-        }
-
-        .status-msg { text-align: center; padding: 40px; font-weight: bold; color: #555; }
-        .error-msg { color: #ff4444; }
-        
-        .retry-btn { 
-            background: #444; color: white; border: none; padding: 8px 20px; 
-            cursor: pointer; border-radius: 4px; margin-top: 15px; font-family: inherit;
-        }
-
-        .nav-header {
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 20px; 
-            background: #111; 
-            padding: 15px 25px; 
-            border-radius: 12px;
-            border: 1px solid #222;
-        }
-
-        @media (max-width: 768px) {
-            body { padding-top: 50px; }
-            .ranking-container { padding: 10px; }
-            .leaderboard-table th, .player-row td { padding: 8px; font-size: 0.9rem; }
-            .p-avatar { width: 35px; height: 35px; margin-right: 8px; }
-        }
+        /* Gold, Silver, Bronze highlights */
+        .player-row:nth-child(1) { background: linear-gradient(90deg, rgba(228, 255, 0, 0.15) 0%, transparent 100%); border-left: 4px solid gold; }
+        .player-row:nth-child(2) { border-left: 4px solid silver; }
+        .player-row:nth-child(3) { border-left: 4px solid #cd7f32; }
+        .p-avatar { border: 2px solid var(--accent-yellow); box-shadow: 0 0 10px rgba(228, 255, 0, 0.2); }
+        .leaderboard-table { backdrop-filter: blur(15px); background: rgba(255,255,255,0.01); }
     </style>
 </head>
 <body>
 
     <div class="ranking-container">
-        <h1 style="text-align:center; margin-bottom: 5px;">MYSTIC <span style="color:var(--accent-yellow)">RANKINGS</span></h1>
-        <p style="text-align: center; color: #555; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 3px; font-size: 0.8rem;">Official EA FC Mobile Leaderboard</p>
+        <div style="text-align: center; margin-bottom: 40px;" data-aos="fade-down">
+            <h1 style="margin:0;">MYSTIC <span style="color:var(--accent-yellow)">RANKINGS</span></h1>
+            <div style="color:#555; letter-spacing:4px; font-size:0.8rem;">THE GLOBAL ELITE</div>
+        </div>
         
-        <div class="nav-header">
-            <a href="index.html" style="color:white; text-decoration:none; font-weight:bold; font-size: 0.9rem;">
-                <i class="fa-solid fa-house" style="color:var(--accent-yellow)"></i> RETURN HOME
-            </a>
-            <button onclick="exportToPDF()" style="background:var(--accent-yellow); color:black; padding:8px 18px; font-size: 0.8rem; font-weight:900; border:none; cursor:pointer; clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);">
-                <i class="fa-solid fa-file-pdf"></i> EXPORT PDF
-            </button>
+        <div class="nav-header" data-aos="fade-in">
+            <a href="index.html" style="color:white; text-decoration:none; font-weight:bold;"><i class="fa-solid fa-house"></i> HOME</a>
+            <button onclick="exportToPDF()" class="view-all-btn" style="padding: 8px 20px; font-size: 0.7rem;">EXPORT PDF</button>
         </div>
 
-        <table class="leaderboard-table">
+        <table class="leaderboard-table" data-aos="fade-up">
             <thead>
                 <tr>
-                    <th width="80">Rank</th>
-                    <th>Player</th>
+                    <th width="80">#</th>
+                    <th>STRIKER</th>
                     <th style="text-align:center;">GS</th>
                     <th style="text-align:center;">GA</th>
-                    <th>Performance</th>
-                    <th style="text-align:right;">Pts</th>
+                    <th style="text-align:right;">PTS</th>
                 </tr>
             </thead>
             <tbody id="ranking-body">
-                <tr>
-                    <td colspan="6" class="status-msg">
-                        <i class="fa-solid fa-circle-notch fa-spin"></i> Reading Arena Data...
-                    </td>
-                </tr>
+                <!-- Data injected here -->
             </tbody>
         </table>
     </div>
 
-<script>
-// --- PDF EXPORT FUNCTION ---
-function exportToPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    doc.setFillColor(5, 5, 5);
-    doc.rect(0, 0, 210, 297, 'F');
-    
-    doc.setTextColor(248, 212, 72); // Accent Yellow
-    doc.setFontSize(22);
-    doc.text("MYSTIC LEGENDS", 14, 20);
-    
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(12);
-    doc.text("EA FC Mobile Global Rankings", 14, 28);
-    doc.setFontSize(10);
-    doc.text(`Generated: ${new Date().toLocaleString()}`, 14, 35);
-
-    const table = document.querySelector(".leaderboard-table");
-    doc.autoTable({
-        html: table,
-        startY: 45,
-        theme: 'grid',
-        headStyles: { fillColor: [248, 212, 72], textColor: [0, 0, 0], fontStyle: 'bold' },
-        styles: { fillColor: [20, 20, 20], textColor: [255, 255, 255], fontSize: 9 },
-        alternateRowStyles: { fillColor: [25, 25, 25] },
-        margin: { left: 14, right: 14 }
-    });
-
-    doc.save("Mystic_Rankings.pdf");
-}
-
-// --- API FETCH LOGIC ---
-const API = "https://ml-server-uw6r.onrender.com/api";
-
-async function loadRankings() {
-    const tbody = document.getElementById('ranking-body');
-    try {
-        const response = await fetch(`${API}/rankings`);
-        if (!response.ok) throw new Error("Offline");
-        const players = await response.json();
-
-        if (players.length === 0) {
-            tbody.innerHTML = '<tr><td colspan="6" class="status-msg">The arena is currently empty.</td></tr>';
-            return;
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+        const API = "https://ml-server-uw6r.onrender.com/api";
+        async function loadRankings() {
+            const tbody = document.getElementById('ranking-body');
+            try {
+                const response = await fetch(`${API}/rankings`);
+                const players = await response.json();
+                tbody.innerHTML = players.map((player, index) => `
+                    <tr class="player-row">
+                        <td class="rank-num">${index + 1}</td>
+                        <td style="display: flex; align-items: center;">
+                            <img src="${player.profilePic || 'https://cdn-icons-png.flaticon.com/512/149/149071.png'}" class="p-avatar">
+                            <span>${player.name} ${index === 0 ? '👑' : ''}</span>
+                        </td>
+                        <td style="text-align:center; color:var(--neon-green);">${player.goalsFor || 0}</td>
+                        <td style="text-align:center; color:#ff4444;">${player.goalsAgainst || 0}</td>
+                        <td class="pts-cell" style="text-align:right;">${player.points}</td>
+                    </tr>`).join('');
+            } catch (error) { }
         }
-
-        tbody.innerHTML = players.map((player, index) => {
-            const currentRank = index + 1;
-            const oldRank = player.previousRank || 0;
-            
-            // Image Logic: Use saved URL or Fallback to default
-            const picUrl = (player.profilePic && player.profilePic.trim() !== "") 
-                ? player.profilePic 
-                : 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
-
-            // Trend arrows
-            let trendIcon = '';
-            if (oldRank !== 0) {
-                if (oldRank > currentRank) trendIcon = '<i class="fa-solid fa-caret-up" style="color:#00ff88; margin-left:8px;"></i>';
-                else if (oldRank < currentRank) trendIcon = '<i class="fa-solid fa-caret-down" style="color:#ff4444; margin-left:8px;"></i>';
-            }
-
-            return `
-            <tr class="player-row">
-                <td class="rank-num">#${currentRank}</td>
-                <td style="display: flex; align-items: center;">
-                    <img src="${picUrl}" class="p-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/149/149071.png'">
-                    <div style="display: flex; flex-direction: column;">
-                        <span>${player.name} ${trendIcon}</span>
-                    </div>
-                </td>
-                <td style="text-align:center; color:var(--green); font-family:monospace;">${player.goalsFor || 0}</td>
-                <td style="text-align:center; color:var(--red); font-family:monospace;">${player.goalsAgainst || 0}</td>
-                <td style="font-size:0.8rem; color:var(--accent-yellow); font-weight:bold; letter-spacing:1px;">${player.trophies || '-'}</td>
-                <td class="pts-cell" style="text-align:right;">${player.points || 0}</td>
-            </tr>`;
-        }).join('');
-    } catch (error) {
-        console.error("Fetch Error:", error);
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="6" class="status-msg error-msg">
-                    Connection to Arena Servers failed. <br>
-                    <button class="retry-btn" onclick="loadRankings()">RETRY CONNECTION</button>
-                </td>
-            </tr>`;
-    }
-}
-
-// Initial Load
-window.addEventListener('DOMContentLoaded', loadRankings);
-</script>
+        loadRankings();
+        // (Keep your PDF Export function exactly as it was)
+    </script>
 </body>
 </html>
