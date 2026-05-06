@@ -1,10 +1,15 @@
 /* Color Palette */
 :root {
     --bg-color: #050505;
+    --pitch-navy: #001a4d;
     --accent-yellow: #E4FF00;
     --accent-blue: #0041FF;
+    --neon-green: #00ff88;
+    --live-red: #ff003c;
     --text-white: #ffffff;
     --gray-text: #aaaaaa;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 * {
