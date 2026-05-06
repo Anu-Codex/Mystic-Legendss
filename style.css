@@ -569,4 +569,52 @@ body.ann-open {
     50% { transform: scale(1.4); opacity: 0.7; }
     100% { transform: scale(1); opacity: 1; }
 }
+/* 1. Full Screen Thunder Flash */
+.thunder-flash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff; /* The flash color */
+    opacity: 0;
+    z-index: 2; /* Sits behind text, above background light */
+    pointer-events: none;
+    /* This creates the random flashing pattern */
+    animation: thunder-strike 7s ease-in-out infinite;
+}
+
+@keyframes thunder-strike {
+    0%, 94%, 100% { opacity: 0; }
+    95% { opacity: 0.15; } /* First quick strike */
+    96% { opacity: 0; }
+    97% { opacity: 0.25; } /* Second main strike */
+    98% { opacity: 0; }
+}
+
+/* 2. Hardware Acceleration to prevent "White Scroll Gaps" */
+.thunder-flash, #lightning-bolt {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: opacity;
+}
+.lightning-bolt-visual {
+    position: fixed;
+    height: 100vh;
+    background: linear-gradient(to bottom, #fff, var(--accent-blue), transparent);
+    z-index: 3;
+    pointer-events: none;
+    filter: blur(1px);
+    box-shadow: 0 0 20px #fff, 0 0 40px var(--accent-blue);
+    opacity: 0;
+    /* Create the "Jagged" look using a simple clip path */
+    clip-path: polygon(50% 0%, 100% 20%, 30% 40%, 80% 60%, 10% 80%, 50% 100%);
+    animation: bolt-fade 0.4s linear;
+}
+
+@keyframes bolt-fade {
+    0% { opacity: 0; transform: scaleX(1); }
+    10% { opacity: 1; transform: scaleX(1.5); }
+    100% { opacity: 0; transform: scaleX(0.5); }
+}
 
