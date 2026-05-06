@@ -5,47 +5,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1024">
     <title>Global Rankings | Mystic Legends</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylef.css">
     <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        /* Gold, Silver, Bronze highlights */
-        .player-row:nth-child(1) { background: linear-gradient(90deg, rgba(228, 255, 0, 0.15) 0%, transparent 100%); border-left: 4px solid gold; }
-        .player-row:nth-child(2) { border-left: 4px solid silver; }
-        .player-row:nth-child(3) { border-left: 4px solid #cd7f32; }
-        .p-avatar { border: 2px solid var(--accent-yellow); box-shadow: 0 0 10px rgba(228, 255, 0, 0.2); }
-        .leaderboard-table { backdrop-filter: blur(15px); background: rgba(255,255,255,0.01); }
-        /* FIX: Restrict Image Size and Table Layout */
-.p-avatar {
-    width: 50px !important;    /* Forces small size */
-    height: 50px !important;   /* Forces small size */
-    min-width: 50px;
-    min-height: 50px;
-    border-radius: 50%;        /* Makes it a circle */
-    object-fit: cover;         /* Prevents stretching */
-    margin-right: 15px;
-    border: 2px solid var(--accent-yellow);
-    display: block;
-}
+    :root {
+        --accent-yellow: #f8d448;
+        --neon-green: #00ff88;
+        --glass-white: rgba(255, 255, 255, 0.03);
+    }
 
-.player-row td {
-    padding: 15px !important;
-    vertical-align: middle !important;
-}
+    body { background: #050505; color: white; padding-top: 80px; font-family: 'Rajdhani', sans-serif; }
+    .ranking-container { max-width: 950px; margin: 0 auto; padding: 15px; }
 
-/* Ensures the name and photo stay on one line */
-.player-row td:nth-child(2) {
-    display: flex;
-    align-items: center;
-    min-width: 250px;
-}
+    /* --- THE TABLE --- */
+    .leaderboard-table { 
+        width: 100%; 
+        border-collapse: separate; 
+        border-spacing: 0 8px; 
+        backdrop-filter: blur(15px);
+        table-layout: fixed; /* Keeps columns stable */
+    }
 
-/* Prevents the table from expanding too wide */
-.leaderboard-table {
-    table-layout: fixed;
-    width: 100%;
-}
+    .leaderboard-table th { 
+        padding: 15px; 
+        color: var(--accent-yellow); 
+        text-transform: uppercase; 
+        font-size: 0.8rem; 
+        text-align: left;
+    }
+
+    /* --- PLAYER ROWS --- */
+    .player-row { background: var(--glass-white); transition: 0.3s; }
+    
+    /* Gold, Silver, Bronze Highlights */
+    .player-row:nth-child(1) { 
+        background: linear-gradient(90deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%); 
+        border-left: 4px solid #FFD700; 
+    }
+    .player-row:nth-child(2) { 
+        background: linear-gradient(90deg, rgba(192, 192, 192, 0.1) 0%, transparent 100%); 
+        border-left: 4px solid #C0C0C0; 
+    }
+    .player-row:nth-child(3) { 
+        background: linear-gradient(90deg, rgba(205, 127, 50, 0.1) 0%, transparent 100%); 
+        border-left: 4px solid #CD7F32; 
+    }
+
+    .player-row td { padding: 10px 15px; vertical-align: middle; font-weight: 700; }
+
+    /* --- THE AVATAR (STRICT FIX) --- */
+    .p-avatar {
+        width: 45px !important;
+        height: 45px !important;
+        min-width: 45px !important;
+        min-height: 45px !important;
+        border-radius: 50%;
+        object-fit: cover; /* Important: prevents squashing */
+        border: 2px solid var(--accent-yellow);
+        margin-right: 12px;
+        background: #111;
+        display: inline-block;
+    }
+
+    /* Flex container for Name + Photo */
+    .striker-cell {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .rank-num { font-style: italic; color: #888; width: 40px; }
+    .pts-cell { color: var(--accent-yellow); font-size: 1.3rem; text-align: right; }
+
+    /* Header Nav */
+    .nav-header {
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        margin-bottom: 20px; 
+        background: #111; 
+        padding: 10px 20px; 
+        border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+        .ranking-container { padding: 5px; }
+        .leaderboard-table th, .player-row td { padding: 8px 10px; font-size: 0.9rem; }
+        .p-avatar { width: 35px !important; height: 35px !important; min-width: 35px; min-height: 35px; }
+    }
     </style>
 </head>
 <body>
