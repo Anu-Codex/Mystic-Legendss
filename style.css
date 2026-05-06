@@ -1,3 +1,32 @@
+/* --- CRITICAL WIDTH FIX --- */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden; /* Hides any peeking animations */
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit; /* Ensures padding doesn't add to width */
+}
+
+/* Fix for the Lightning & Dust layers */
+.thunder-flash, #esportsDust, #particles-js, .lightning-bolt-visual {
+    width: 100% !important; /* Changed from 100vw to 100% */
+    max-width: 100vw;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+/* Fix for the rotating Aurora Light */
+body::after {
+    /* Ensure the rotating light doesn't push the page width */
+    pointer-events: none;
+}
 /* Color Palette */
 :root {
     --bg-color: #050505;
