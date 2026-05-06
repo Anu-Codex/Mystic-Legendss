@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,13 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <style>
-        .hero { background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)), url('https://images.unsplash.com/photo-1552667466-07770ae110d0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') center/cover; }
-        .home-tour-card { border-top: 3px solid var(--accent-yellow); }
-    </style>
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <div class="logo"><img src="logo1.png" alt="Logo" class="nav-logo"> MYSTIC <span>LEGENDS</span></div>
         <div style="display: flex; align-items: center; gap: 15px;">
@@ -28,78 +24,138 @@
             <div class="dropdown">
                 <button class="dropbtn">MENU <i class="fa-solid fa-bars"></i></button>
                 <div class="dropdown-content">
-                    <a href="tournaments.html">Tournaments</a>
-                    <a href="rankings.html">Rankings</a>
-                    <a href="about.html">About</a>
-                    <a href="rules.html">Rules</a>
-                    <a href="contact.html">Contact</a>
-                    <a href="login.html">Admin</a>
+                    <a href="tournaments.html">Tournament Info</a>
+                    <a href="rankings.html">Player Rankings</a>
+                    <a href="about.html">About Us</a>
+                    <a href="rules.html">Rules & Regulations</a>
+                    <a href="contact.html">Contact Us</a>
+                    <a href="login.html">Admin Login</a>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Announcement Modal -->
     <div id="annOverlay" class="ann-overlay">
         <div class="ann-modal">
-            <div style="background:var(--accent-blue); padding:15px; color:white; font-weight:bold; display:flex; justify-content:space-between;">
-                <span>BROADCAST CENTER</span>
-                <i class="fa-solid fa-xmark" onclick="closeAnn()" style="cursor:pointer;"></i>
+            <div style="background:var(--accent-blue); padding:15px; color:white; font-weight:bold; display:flex; justify-content:space-between; align-items:center;">
+                <span><i class="fa-solid fa-bullhorn"></i> BROADCAST CENTER</span>
+                <i class="fa-solid fa-xmark" onclick="closeAnn()" style="cursor:pointer; font-size:1.5rem;"></i>
             </div>
             <div id="annList" class="ann-list"></div>
+            <div style="padding:15px; border-top:1px solid #222;">
+                <button onclick="closeAnn()" style="width:100%; background:var(--accent-blue); color:white; border:none; padding:12px; border-radius:8px; font-weight:bold; cursor:pointer;">CLOSE BROADCAST</button>
+            </div>
         </div>
     </div>
 
-    <section class="hero">
-        <div class="hero-content" data-aos="zoom-out" data-aos-duration="1500">
-            <h2 class="mission-title" style="text-shadow: 0 0 20px rgba(228, 255, 0, 0.4);">
-                THE ULTIMATE STAGE FOR <br>
-                <span style="color:var(--accent-yellow)">EA FC MOBILE EXCELLENCE</span>
+    <!-- MISSION & ABOUT SECTION -->
+    <section class="nexus-section" style="padding-top: 120px;">
+        <div class="text-block" style="text-align: center;" data-aos="zoom-out">
+            <h2 class="mission-title" style="color: white; text-transform: uppercase;">
+                The Ultimate Stage for <br>
+                <span style="color:var(--accent-yellow)">EA FC Mobile Excellence</span>
             </h2>
-            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px;">
-                <a href="tournaments.html" class="join-action-btn" style="width:auto; padding: 15px 40px;">ENTER ARENA</a>
+        </div>
+
+        <div class="text-block" style="border-left: 4px solid var(--accent-blue); padding: 20px; background: rgba(0,65,255,0.05); border-radius: 0 15px 15px 0;" data-aos="fade-right">
+            <span class="sub-title" style="color:var(--accent-yellow); text-transform: uppercase; letter-spacing: 2px;">Elevate Your Game</span>
+            <p style="color:#bbb; font-size: 1.1rem; margin: 0; line-height: 1.8;">
+                Mystic Legends isn’t just a community; it’s the premier destination for <strong>EA FC Mobile enthusiasts</strong> who live for the thrill of the pitch. Our platform provides the infrastructure you need to test your skills against the very best.
+            </p>
+        </div>
+
+        <!-- WHY JOIN GRID -->
+        <div class="text-block" style="margin-top: 60px;">
+            <h3 style="color:white; text-transform: uppercase; text-align: center; margin-bottom: 35px; letter-spacing: 3px;" data-aos="fade-up">
+                Why Join the <span style="color:var(--accent-yellow)">Mystic Elite?</span>
+            </h3>
+            <div class="home-tour-grid">
+                <div class="home-tour-card" data-aos="fade-up" data-aos-delay="100">
+                    <h4 style="color:var(--accent-yellow); margin-bottom: 12px;"><i class="fa-solid fa-trophy"></i> Structured Tournaments</h4>
+                    <p style="color:#888; font-size: 0.95rem;">Experience organized leagues and seasonal championships designed for pro-level mobile play.</p>
+                </div>
+                <div class="home-tour-card" data-aos="fade-up" data-aos-delay="200">
+                    <h4 style="color:var(--accent-yellow); margin-bottom: 12px;"><i class="fa-solid fa-chart-line"></i> Global Rankings</h4>
+                    <p style="color:#888; font-size: 0.95rem;">Climb our custom leaderboard and prove you are the number one player in the community.</p>
+                </div>
+                <div class="home-tour-card" data-aos="fade-up" data-aos-delay="300">
+                    <h4 style="color:var(--accent-yellow); margin-bottom: 12px;"><i class="fa-solid fa-brain"></i> Strategic Insights</h4>
+                    <p style="color:#888; font-size: 0.95rem;">Access a collective brain trust of elite players. Share formations and meta-analysis.</p>
+                </div>
+                <div class="home-tour-card" data-aos="fade-up" data-aos-delay="400">
+                    <h4 style="color:var(--accent-yellow); margin-bottom: 12px;"><i class="fa-solid fa-comments"></i> Thriving Social Hub</h4>
+                    <p style="color:#888; font-size: 0.95rem;">Beyond the matches, connect with fans. Share your "Dream Team" pulls and build rivalries.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-block" style="text-align: center; background: rgba(255,255,255,0.03); padding: 40px 25px; border-radius: 20px; border: 1px solid #1a1a1a; margin-top: 60px;" data-aos="zoom-in">
+            <span class="sub-title" style="color:var(--accent-yellow); text-transform: uppercase; letter-spacing: 2px;">From Passion to Podium</span>
+            <p style="color:#eee; font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                We believe every player has the potential to become a legend. <strong>Mystic Legends</strong> bridges the gap between casual play and professional esports by offering a stage where consistency is rewarded.
+            </p>
+        </div>
+
+        <div class="text-block" style="text-align: center; padding-top: 40px;" data-aos="fade-up">
+            <h3 style="color:var(--accent-yellow); text-transform: uppercase; margin-bottom: 20px; font-size: 1.8rem;">Ready to Make Your Mark?</h3>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="https://chat.whatsapp.com/Idtmr2beKY48zXvjVo6fNl" target="_blank" class="join-action-btn" style="width: auto; padding: 15px 30px;">JOIN THE COMMUNITY</a>
+                <a href="tournaments.html" class="view-all-btn" style="padding: 15px 30px;">VIEW ACTIVE ARENAS</a>
             </div>
         </div>
     </section>
 
+    <!-- ARENA HIGHLIGHTS -->
     <section class="recent-events">
         <h2 style="text-align:center;" data-aos="fade-up">ARENA <span style="color:var(--accent-yellow)">HIGHLIGHTS</span></h2>
-        <div id="recent-tours-container" class="home-tour-grid" data-aos="fade-up">
-            <p style="text-align:center; color:#555;">Connecting to Pitch...</p>
+        <div id="recent-tours-container" class="home-tour-grid"></div>
+        <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
+            <a href="tournaments.html" class="view-all-btn">SEE FULL TOURNAMENT LIST <i class="fa-solid fa-arrow-right"></i></a>
         </div>
     </section>
 
-    <section class="home-rankings" style="background: #080808; border-y: 1px solid #111;">
+    <!-- TOP RANKINGS -->
+    <section class="home-rankings" style="background: #080808; padding: 60px 0;">
         <h2 style="text-align:center;" data-aos="fade-up">TOP <span style="color:var(--accent-yellow)">STRIKERS</span></h2>
-        <div class="mini-leaderboard" data-aos="flip-left">
+        <div class="mini-leaderboard" data-aos="flip-left" style="max-width: 800px; margin: 30px auto;">
             <div class="rank-header"><span>RANK</span><span>PLAYER</span><span>PTS</span></div>
             <div id="home-rankings-container"></div>
         </div>
+        <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
+            <a href="rankings.html" class="view-all-btn">VIEW GLOBAL RANKINGS <i class="fa-solid fa-ranking-star"></i></a>
+        </div>
     </section>
 
+    <!-- ARENA RESULTS -->
     <section class="recent-events">
-        <h2 style="text-align:center;" data-aos="fade-up">RECENT <span style="color:var(--accent-yellow)">RESULTS</span></h2>
-        <div id="home-recent-results" class="home-tour-grid" data-aos="fade-up"></div>
+        <h2 style="text-align:center;" data-aos="fade-up">RECENT <span style="color:var(--accent-yellow)">ARENA RESULTS</span></h2>
+        <div id="home-recent-results" class="home-tour-grid"></div>
+        <div style="text-align: center; margin-top: 30px;" data-aos="fade-up">
+            <a href="livescores.html" class="view-all-btn" style="border-color:#ff003c; color:#ff003c;">VIEW ALL MATCHES <i class="fa-solid fa-tower-broadcast"></i></a>
+        </div>
     </section>
 
+    <!-- NEWSLETTER -->
     <section class="newsletter-sec" data-aos="fade-in">
         <div class="news-content">
             <h2>STAY <span style="color:var(--accent-yellow)">ELITE</span></h2>
             <p>Get tournament alerts delivered to your inbox.</p>
             <form id="newsForm" class="news-form">
-                <input type="email" id="subEmail" placeholder="Enter Email" required>
+                <input type="email" id="subEmail" placeholder="Enter Pro Email" required>
                 <button type="submit" id="subBtn">SUBSCRIBE</button>
             </form>
-            <div id="newsMsg"></div>
+            <div id="newsMsg" style="margin-top:15px; font-weight:bold;"></div>
         </div>
     </section>
 
     <footer>
         <div class="social-icons">
-            <a href="#"><i class="fa-brands fa-discord"></i></a>
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
             <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            <a href="#"><i class="fa-brands fa-discord"></i></a>
         </div>
-        <div class="copyright">&copy; Mystic Legends 2024 | All Rights Reserved</div>
+        <div class="copyright">&copy; Mystic Legends 2024-26 | All Rights Reserved For <span class="owner">Anubhav Sarkar</span></div>
     </footer>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -133,7 +189,7 @@
                     <div class="home-player-row">
                         <div class="rank-pill">${index + 1}</div>
                         <div class="p-name">${player.name}</div>
-                        <div class="p-pts">${player.points}</div>
+                        <div class="p-pts">${player.points} <span style="font-size:0.6rem; color:#555;">PTS</span></div>
                     </div>
                 `).join('');
             } catch (err) { }
@@ -147,23 +203,66 @@
                 const finishedMatches = matches.filter(m => m.s1 !== "-" && m.s2 !== "-").slice(0, 4);
                 container.innerHTML = finishedMatches.map(m => `
                     <div class="home-tour-card" style="padding:15px; text-align:center;">
-                        <div style="font-size:0.6rem; color:#555; margin-bottom:10px;">${m.tournamentTitle}</div>
+                        <div style="font-size:0.6rem; color:#888; margin-bottom:10px;">${m.tournamentTitle}</div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:bold;">${m.p1}</span>
-                            <span style="background:var(--accent-yellow); color:black; padding:2px 8px; border-radius:4px; font-weight:900;">${m.s1}:${m.s2}</span>
-                            <span style="font-weight:bold;">${m.p2}</span>
+                            <span style="font-weight:bold; color:white;">${m.p1}</span>
+                            <span style="background:var(--accent-yellow); color:black; padding:4px 10px; border-radius:4px; font-weight:900;">${m.s1}:${m.s2}</span>
+                            <span style="font-weight:bold; color:white;">${m.p2}</span>
                         </div>
                     </div>
                 `).join('');
             } catch (err) { }
         }
 
-        // Rest of your functions (Announcements/Newsletter) remain EXACTLY same
-        // ... (Keep existing showAnn, closeAnn, checkAnnouncements, newsForm logic here)
+        let allMessages = [];
+        async function checkAnnouncements() {
+            try {
+                const res = await fetch(`${API_BASE}/announcement`);
+                allMessages = await res.json();
+                if (allMessages.length > 0) {
+                    if (allMessages[0]._id !== localStorage.getItem('mystic_last_seen_ann')) {
+                        document.getElementById('annBadge').style.display = 'block';
+                    }
+                }
+            } catch(e) { }
+        }
+
+        function showAnn() {
+            const overlay = document.getElementById('annOverlay');
+            const list = document.getElementById('annList');
+            overlay.style.display = 'flex';
+            document.body.classList.add('ann-open');
+            if (allMessages.length > 0) {
+                localStorage.setItem('mystic_last_seen_ann', allMessages[0]._id);
+                document.getElementById('annBadge').style.display = 'none';
+            }
+            list.innerHTML = allMessages.length === 0 ? "<p style='color:#555;'>No news yet.</p>" : 
+                allMessages.map(m => `<div class="ann-item">
+                    <div class="ann-date">${new Date(m.date).toLocaleDateString()}</div>
+                    <div style="white-space: pre-wrap; color:#fff;">${m.message}</div>
+                </div>`).join('');
+        }
+
+        function closeAnn() { document.getElementById('annOverlay').style.display = 'none'; document.body.classList.remove('ann-open'); }
+
+        document.getElementById('newsForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('subEmail').value;
+            try {
+                const res = await fetch(`${API_BASE}/subscribe`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ email })
+                });
+                if(res.ok) document.getElementById('newsMsg').innerText = "✓ Welcome!";
+            } catch(err) { }
+        });
+
         window.addEventListener('DOMContentLoaded', () => {
             loadHomeTournaments();
             loadHomeRankings();
             loadTop5Results();
+            checkAnnouncements();
         });
     </script>
 </body>
