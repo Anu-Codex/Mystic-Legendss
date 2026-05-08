@@ -683,26 +683,27 @@ footer {
     pointer-events: none !important; /* Allows you to click "through" the animations */
 }
 /* --- BROADCAST TICKER STYLING --- */
+/* --- UPDATED: SECTION-BASED BROADCAST TICKER --- */
 .broadcast-ticker {
-    position: fixed;
-    bottom: 0;
-    left: 0;
+    position: relative; /* CHANGED: Now moves with the page */
     width: 100%;
-    height: 40px;
-    background: rgba(5, 5, 5, 0.95);
+    height: 45px; /* Slightly taller for better visibility */
+    background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--accent-blue);
+    border-bottom: 1px solid var(--accent-blue);
     display: flex;
     align-items: center;
-    z-index: 2000;
+    z-index: 10;
     overflow: hidden;
-    box-shadow: 0 -5px 20px rgba(0, 65, 255, 0.2);
+    margin-top: 50px; /* Gap from the section above */
+    margin-bottom: 0; /* Sits tight against the newsletter */
 }
 
 .ticker-label {
     background: var(--live-red);
     color: white;
-    padding: 0 20px;
+    padding: 0 25px;
     height: 100%;
     display: flex;
     align-items: center;
@@ -712,32 +713,26 @@ footer {
     clip-path: polygon(0 0, 100% 0, 85% 100%, 0 100%);
     z-index: 2;
     white-space: nowrap;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .ticker-wrap {
     flex: 1;
     overflow: hidden;
-    white-space: nowrap;
 }
 
 .ticker-content {
     display: inline-block;
-    padding-left: 100%;
-    font-weight: 600;
+    white-space: nowrap;
+    font-weight: 700;
     font-size: 0.9rem;
     color: var(--accent-yellow);
     text-transform: uppercase;
-    animation: ticker-scroll 25s linear infinite;
+    animation: ticker-scroll 30s linear infinite;
 }
 
 .ticker-content span {
-    margin-right: 50px;
+    margin-right: 60px;
     color: white;
-}
-
-.ticker-content b {
-    color: var(--accent-yellow);
 }
 
 @keyframes ticker-scroll {
@@ -745,8 +740,7 @@ footer {
     100% { transform: translateX(-100%); }
 }
 
-/* Adjust Footer so ticker doesn't hide copyright */
+/* REMOVE the footer padding fix we added earlier */
 footer {
-    padding-bottom: 80px !important;
+    padding-bottom: 50px !important;
 }
-
