@@ -144,6 +144,30 @@
             </tbody>
         </table>
     </div>
+    <!-- PLAYER CARD MODAL -->
+<div id="playerCardOverlay" class="card-overlay" onclick="closeCard(event)">
+    <div class="fut-card" id="futCard">
+        <div class="card-header">
+            <div class="card-ovr" id="ovrVal">99</div>
+            <div class="card-pos">STRIKER</div>
+        </div>
+        
+        <img id="cardPic" src="" class="card-img">
+        
+        <div class="card-name" id="cardName">PLAYER NAME</div>
+        
+        <div class="card-stats">
+            <div class="stat-item"><span class="stat-val" id="statWins">0</span> <span class="stat-lbl">WINS</span></div>
+            <div class="stat-item"><span class="stat-val" id="statGS">0</span> <span class="stat-lbl">GS</span></div>
+            <div class="stat-item"><span class="stat-val" id="statGA">0</span> <span class="stat-lbl">GA</span></div>
+            <div class="stat-item"><span class="stat-val" id="statPTS">0</span> <span class="stat-lbl">PTS</span></div>
+        </div>
+        
+        <div style="text-align:center; margin-top:15px;">
+            <div id="cardBadge" style="font-weight:900; font-size:0.7rem; letter-spacing:2px; color:rgba(0,0,0,0.5)">MYSTIC ELITE ARENA</div>
+        </div>
+    </div>
+</div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
@@ -209,6 +233,40 @@
         }
 
         loadRankings();
+        // Replace the span line in your rankings map with this:
+<span onclick="openCard('${player.name}')" style="cursor:pointer; text-decoration:underline;">${player.name} ${index === 0 ? '👑' : ''}</span>
+        async function openCard(playerName) {
+    try {
+        const res = await fetch(`${API}/player/${playerName}`);
+        const p = await res.json();
+
+        // 1. Calculate OVR (Custom formula based on wins and points)
+        const ovr = Math.min(99, 75 + (p.wins * 2) + Math.floor(p.points / 5));
+        
+        document.getElementById('ovrVal').innerText = ovr;
+        document.getElementById('cardName').innerText = p.name;
+        document.getElementById('statWins').innerText = p.wins;
+        document.getElementById('statGS').innerText = p.goalsFor || 0;
+        document.getElementById('statGA').innerText = p.goalsAgainst || 0;
+        document.getElementById('statPTS').innerText = p.points;
+        document.getElementById('cardPic').src = p.profilePic || 'https://cdn-icons-png.flaticon.com/512/149/149071.png';
+
+        // 2. Change Card Style based on OVR
+        const card = document.getElementById('futCard');
+        card.className = "fut-card"; // Reset
+        if(ovr >= 95) card.classList.add('card-toty'); // Blue/TOTY style for legends
+
+        document.getElementById('playerCardOverlay').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Stop background scroll
+    } catch(e) { console.log("Card error"); }
+}
+
+function closeCard(e) {
+    if(e.target.id === "playerCardOverlay") {
+        document.getElementById('playerCardOverlay').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+}
     </script>
 </body>
 </html>
