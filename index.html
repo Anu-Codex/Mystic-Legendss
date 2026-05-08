@@ -147,6 +147,17 @@ body, #esportsDust, .home-tour-card, .tour-card {
             <a href="livescores.html" class="view-all-btn" style="border-color:#ff003c; color:#ff003c;">VIEW ALL MATCHES <i class="fa-solid fa-tower-broadcast"></i></a>
         </div>
     </section>
+    <!-- PREMIUM BROADCAST TICKER -->
+<div class="broadcast-ticker">
+    <div class="ticker-label">
+        <i class="fa-solid fa-tower-broadcast"></i> ARENA LIVE
+    </div>
+    <div class="ticker-wrap">
+        <div class="ticker-content" id="dynamicTicker">
+            Connecting to Mystic Legends Live Feed... Synchronizing Arena Data...
+        </div>
+    </div>
+</div>
 
     <!-- NEWSLETTER -->
     <section class="newsletter-sec" data-aos="fade-in">
@@ -357,6 +368,42 @@ animate();
 }
 
 triggerLightning();
+        async function updateTicker() {
+    const ticker = document.getElementById('dynamicTicker');
+    try {
+        // 1. Fetch Results & Announcements
+        const [resMatch, resAnn] = await Promise.all([
+            fetch('https://ml-server-uw6r.onrender.com/api/arena-results').then(r => r.json()),
+            fetch('https://ml-server-uw6r.onrender.com/api/announcement').then(r => r.json())
+        ]);
+
+        let tickerText = "";
+
+        // 2. Add Recent Results to Ticker
+        const recentMatches = resMatch.filter(m => m.s1 !== "-").slice(0, 5);
+        recentMatches.forEach(m => {
+            tickerText += ` <span>[RESULT] <b>${m.p1}</b> ${m.s1}:${m.s2} <b>${m.p2}</b> IN ${m.tournamentTitle} </span> • `;
+        });
+
+        // 3. Add Latest Announcement to Ticker
+        if(resAnn.length > 0) {
+            tickerText += ` <span>[NEWS] ${resAnn[0].message} </span> • `;
+        }
+
+        // 4. Fallback if empty
+        if(!tickerText) tickerText = "WELCOME TO MYSTIC LEGENDS ARENA • JOIN THE COMMUNITY FOR DAILY TOURNAMENTS • ";
+
+        // Repeat text to ensure a continuous loop
+        ticker.innerHTML = tickerText + tickerText;
+
+    } catch (e) {
+        ticker.innerHTML = "LIVE FEED OFFLINE... RECONNECTING TO MYSTIC SERVERS...";
+    }
+}
+
+// Update ticker every 2 minutes to get fresh results
+setInterval(updateTicker, 120000);
+window.addEventListener('DOMContentLoaded', updateTicker);
     </script>
 </body>
 </html>
