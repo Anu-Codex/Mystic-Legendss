@@ -240,6 +240,16 @@ body::after {
                 <button onclick="loadSubscribers()" class="btn-outline">Show Subscribers</button>
                 <div id="subList" style="margin-top:10px; font-family:monospace; color:#888;"></div>
             </div>
+            <!-- 8. HALL OF FAME MANAGER -->
+<div class="card" style="border-left: 4px solid #FFD700;">
+    <h3><i class="fa-solid fa-crown"></i> Legacy Manager</h3>
+    <input type="text" id="legName" placeholder="Champion Name">
+    <input type="text" id="legTour" placeholder="Tournament Name">
+    <input type="text" id="legPic" placeholder="Winner Image URL">
+    <input type="text" id="legScore" placeholder="Winning Score (e.g. 4-0)">
+    <button onclick="addLegacy()" class="btn-yellow" style="background:gold; color:black;">Induct to Hall of Fame</button>
+    <div id="adminLegacyList" style="margin-top:10px; max-height:150px; overflow-y:auto;"></div>
+</div>
 
         </div>
     </div>
@@ -433,6 +443,34 @@ body::after {
 
         async function broadcast() { await fetch(`${API}/announcement`, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ message: document.getElementById('annMsg').value }) }); notify("Sent!"); document.getElementById('annMsg').value=""; }
         async function loadSubscribers() { const r = await fetch(`${API}/subscribers`); const d = await r.json(); document.getElementById('subList').innerText = d.map(s => s.email).join(', '); }
+        async function addLegacy() {
+    const data = {
+        playerName: document.getElementById('legName').value,
+        tournamentTitle: document.getElementById('legTour').value,
+        playerPic: document.getElementById('legPic').value,
+        score: document.getElementById('legScore').value,
+        date: new Date().toLocaleDateString('en-GB', { month: 'short', year: 'numeric' })
+    };
+    await fetch(`${API}/manage-legacy`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ action: 'add', data })
+    });
+    notify("Legend Inducted!");
+    loadLegacyAdmin();
+}
+
+async function loadLegacyAdmin() {
+    const res = await fetch(`${API}/legacy`);
+    const list = await res.json();
+    document.getElementById('adminLegacyList').innerHTML = list.map(l => `
+        <div style="padding:5px; border-bottom:1px solid #222; font-size:0.8rem;">
+            ${l.playerName} (${l.tournamentTitle}) 
+            <i class="fa-solid fa-trash" onclick="deleteLegacy('${l._id}')" style="float:right; color:red; cursor:pointer;"></i>
+        </div>
+    `).join('');
+}
+// Call loadLegacyAdmin() inside your window.onload
 
         window.onload = loadEverything;
 
