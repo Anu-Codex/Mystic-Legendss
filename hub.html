@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystic Network | Auction Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
+        body { font-family: 'Rajdhani', sans-serif; background-color: #05080a; color: #e2e8f0; }
+        .glass { background: rgba(17, 24, 39, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        .neon-text { color: #10b981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+        .neon-border { border-left: 4px solid #10b981; }
+    </style>
+</head>
+<body class="min-h-screen p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl font-black uppercase tracking-tighter italic">
+                <span class="text-white">Auction</span> <span class="neon-text">Hub</span>
+            </h1>
+            <p class="text-gray-500 mt-2">Live Monitoring System for All Active Tournaments</p>
+        </header>
+
+        <!-- Grid for Auction Cards -->
+        <div id="hubGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION: ADD YOUR SITES HERE ---
+        const AUCTION_SITES = [
+            {
+                id: "mystic",
+                name: "Mystic Legends",
+                game: "FC Mobile",
+                renderUrl: "https://ml-go.onrender.com/",
+                siteUrl: "https://mystic-auction-live.vercel.app/" // Link to your actual auction page
+            },
+            {
+                id: "nexus",
+                name: "Nexus Go",
+                game: "PES / eFootball",
+                renderUrl: "https://nexus-go.onrender.com/",
+                siteUrl: "https://your-nexus-frontend-link.com"
+            }
+        ];
+
+        const hubGrid = document.getElementById('hubGrid');
+
+        // Create a card for each site
+        AUCTION_SITES.forEach(site => {
+            const card = document.createElement('div');
+            card.id = `card-${site.id}`;
+            card.className = "glass neon-border rounded-xl p-6 transition-all hover:scale-[1.02] duration-300";
+            card.innerHTML = `
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-xl font-black text-white uppercase">${site.name}</h3>
+                        <p class="text-[10px] text-neon-text font-bold tracking-widest uppercase">${site.game}</p>
+                    </div>
+                    <div id="status-${site.id}" class="h-2 w-2 rounded-full bg-gray-600"></div>
+                </div>
+                
+                <div id="content-${site.id}" class="space-y-4 py-4">
+                    <p class="text-gray-500 italic text-sm">Connecting to server...</p>
+                </div>
+
+                <a href="${site.siteUrl}" target="_blank" class="block w-full text-center bg-white/5 hover:bg-emerald-500 hover:text-black py-2 rounded-lg font-bold text-xs transition-all uppercase tracking-widest mt-4">
+                    Open Full Auction <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                </a>
+            `;
+            hubGrid.appendChild(card);
+
+            // Establish Socket Connection
+            const socket = io(site.renderUrl);
+
+            socket.on('connect', () => {
+                document.getElementById(`status-${site.id}`).className = "h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]";
+            });
+
+            socket.on('disconnect', () => {
+                document.getElementById(`status-${site.id}`).className = "h-2 w-2 rounded-full bg-red-500";
+            });
+
+            // Handle the Live Data
+            socket.on('updateAuction', (state) => {
+                const container = document.getElementById(`content-${site.id}`);
+                
+                if (!state || !state.activePlayerId) {
+                    container.innerHTML = `
+                        <div class="text-center py-4">
+                            <p class="text-gray-600 text-sm">NO ACTIVE BIDDING</p>
+                        </div>
+                    `;
+                } else {
+                    container.innerHTML = `
+                        <div class="animate-in fade-in zoom-in duration-300">
+                            <p class="text-[10px] text-gray-500 uppercase font-bold mb-1">Now Up For Bid:</p>
+                            <h4 class="text-2xl font-bold text-white leading-tight mb-4">${state.activePlayerId.name}</h4>
+                            
+                            <div class="flex justify-between items-center bg-black/40 p-3 rounded-lg">
+                                <div>
+                                    <p class="text-[9px] text-gray-500 uppercase font-bold">Current Bid</p>
+                                    <p class="text-xl font-black text-yellow-400">${state.currentBid}L</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[9px] text-gray-500 uppercase font-bold">Leading</p>
+                                    <p class="text-xs font-bold text-white truncate max-w-[100px]">${state.highestBidder}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
